@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #111827;
+}
+
+.home {
+    min-height: 100vh;
+    background: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.home-container {
+    width: 90%;
+    max-width: 1250px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+/* LEFT */
+
+.home-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-wrapper {
+    width: 340px;
+    height: 450px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .5);
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+}
+
+.profile-name {
+    margin-top: 18px;
+    color: #3B82F6;
+    font: 60px 'Anton', sans-serif;
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1;
+}
+
+/* RIGHT */
+
+.home-right {
+    color: white;
+    padding-left: 60px;
+}
+
+.home-year {
+    color: #9CA3AF;
+    font-size: 12px;
+}
+
+.home-title {
+    font: 100px/0.9 'Anton', sans-serif;
+    margin: 20px 0;
+}
+
+.home-title span {
+    display: block;
+}
+
+.home-info {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.home-tag {
+    background: white;
+    color: black;
+    padding: 5px 10px;
+    font-size: 9px;
+}
+
+.home-description {
+    color: #D1D5DB;
+    max-width: 430px;
+    margin-top: 25px;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.home-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 13px 25px;
+    background: #2563EB;
+    color: white;
+    font-size: 12px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.home-button:hover {
+    background: white;
+    color: #2563EB;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .home-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .profile-wrapper {
+        width: 280px;
+        height: 370px;
+    }
+
+    .profile-name {
+        font-size: 45px;
+    }
+
+    .home-right {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .home-title {
+        font-size: 70px;
+    }
+
+    .home-info {
+        justify-content: center;
+    }
+
+    .home-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

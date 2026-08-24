@@ -1,0 +1,893 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #111111;
+    color: #ffffff;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =====================================================
+   SITE
+===================================================== */
+
+.site {
+    min-height: 100vh;
+    background: #111111;
+}
+
+.main-content {
+    min-height: calc(100vh - 80px);
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+    height: 80px;
+
+    padding: 0 5vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #111111;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    position: relative;
+    z-index: 100;
+}
+
+.navbar-logo {
+    font-family: "Anton", sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+
+    transition: 0.3s ease;
+}
+
+.navbar-logo:hover {
+    color: #4d8dff;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.nav-link {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+
+    color: #888888;
+
+    transition: 0.3s ease;
+
+    position: relative;
+}
+
+.nav-link::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -8px;
+
+    width: 0;
+    height: 2px;
+
+    background: #3d7eff;
+
+    transition: 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #ffffff;
+}
+
+.nav-link.active::after {
+    width: 100%;
+}
+
+.navbar-year {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #777777;
+}
+
+
+/* =====================================================
+   HOME
+===================================================== */
+
+.home {
+    min-height: calc(100vh - 80px);
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 50%,
+            rgba(30, 71, 150, 0.45),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(35, 55, 100, 0.25),
+            transparent 30%
+        ),
+        #111111;
+}
+
+.home-container {
+    width: min(1400px, 90%);
+
+    min-height: calc(100vh - 80px);
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    align-items: center;
+
+    gap: 50px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* =====================================================
+   HOME LEFT
+===================================================== */
+
+.home-left {
+    min-height: 650px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    position: relative;
+}
+
+.profile-wrapper {
+    width: 350px;
+    height: 470px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    z-index: 2;
+
+    border-radius: 4px;
+
+    box-shadow:
+        20px 20px 0 rgba(50, 96, 170, 0.35),
+        0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    filter: grayscale(100%) contrast(1.08);
+
+    transition: 0.5s ease;
+}
+
+.profile-wrapper:hover .profile-image {
+    transform: scale(1.03);
+}
+
+
+/* =====================================================
+   CIRCLE TEXT
+===================================================== */
+
+.circle-decoration {
+    width: 500px;
+    height: 500px;
+
+    border: 1px dashed rgba(255, 255, 255, 0.18);
+
+    border-radius: 50%;
+
+    position: absolute;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    padding-top: 15px;
+
+    animation: rotateCircle 25s linear infinite;
+}
+
+.circle-decoration span {
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    white-space: nowrap;
+}
+
+@keyframes rotateCircle {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =====================================================
+   PROFILE TEXT
+===================================================== */
+
+.profile-name {
+    font-family: "Anton", sans-serif;
+
+    font-size: 65px;
+
+    color: #3f83ff;
+
+    letter-spacing: 3px;
+
+    margin-top: 20px;
+
+    transform: rotate(-3deg);
+
+    z-index: 3;
+}
+
+.profile-label {
+    color: #111111;
+
+    background: #ffffff;
+
+    padding: 4px 15px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    transform: rotate(-2deg);
+
+    margin-top: -8px;
+
+    z-index: 4;
+}
+
+
+/* =====================================================
+   HOME RIGHT
+===================================================== */
+
+.home-right {
+    position: relative;
+
+    padding-left: 30px;
+}
+
+.home-year {
+    position: absolute;
+
+    right: 0;
+    top: -30px;
+
+    font-size: 11px;
+
+    line-height: 1.1;
+
+    color: #777777;
+
+    letter-spacing: 2px;
+}
+
+.home-title-wrapper {
+    position: relative;
+
+    display: inline-block;
+}
+
+.home-title {
+    font-family: "Anton", sans-serif;
+
+    font-size: clamp(75px, 9vw, 150px);
+
+    line-height: 0.82;
+
+    letter-spacing: -2px;
+
+    color: #eeeeee;
+}
+
+.home-title span {
+    display: block;
+}
+
+.home-title-overlay {
+    position: absolute;
+
+    top: 55%;
+
+    left: 10%;
+
+    color: #c93232;
+
+    font-family: "Anton", sans-serif;
+
+    font-size: clamp(40px, 5vw, 80px);
+
+    transform: rotate(-7deg);
+
+    opacity: 0.95;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   HOME INFO
+===================================================== */
+
+.home-info {
+    margin-top: 45px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.home-tag {
+    padding: 5px 12px;
+
+    background: #eeeeee;
+
+    color: #222222;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 1px;
+
+    transform: rotate(-2deg);
+}
+
+.home-tag:nth-child(2) {
+    transform: rotate(2deg);
+}
+
+.home-tag:nth-child(3) {
+    transform: rotate(-1deg);
+}
+
+
+/* =====================================================
+   HOME DESCRIPTION
+===================================================== */
+
+.home-description {
+    margin-top: 25px;
+
+    max-width: 430px;
+
+    color: #aaaaaa;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* =====================================================
+   HOME BUTTON
+===================================================== */
+
+.home-actions {
+    margin-top: 30px;
+}
+
+.home-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 14px 22px;
+
+    background: #ffffff;
+
+    color: #111111;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+
+    transition: 0.3s ease;
+}
+
+.home-button span {
+    font-size: 18px;
+}
+
+.home-button:hover {
+    background: #3d7eff;
+
+    color: #ffffff;
+
+    transform: translateY(-3px);
+}
+
+
+/* =====================================================
+   STICKERS
+===================================================== */
+
+.sticker {
+    position: absolute;
+
+    z-index: 5;
+
+    user-select: none;
+
+    pointer-events: none;
+}
+
+.sticker-smile {
+    left: 8%;
+
+    bottom: 15%;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+
+    background: #f1b52c;
+
+    color: #111111;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 27px;
+
+    transform: rotate(-15deg);
+}
+
+.sticker-star {
+    right: 10%;
+
+    top: 17%;
+
+    color: #3d7eff;
+
+    font-size: 55px;
+
+    transform: rotate(15deg);
+}
+
+.sticker-arrow {
+    right: 8%;
+
+    bottom: 15%;
+
+    color: #3d7eff;
+
+    font-size: 90px;
+
+    transform: rotate(-15deg);
+
+    opacity: 0.5;
+}
+
+
+/* =====================================================
+   GENERAL PAGE
+===================================================== */
+
+.page-section {
+    min-height: calc(100vh - 80px);
+
+    padding: 50px 6vw 100px;
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(35, 67, 130, 0.2),
+            transparent 25%
+        ),
+        #111111;
+}
+
+.section-topbar {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    color: #777777;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+.page-header {
+    max-width: 800px;
+
+    padding-top: 80px;
+
+    margin-bottom: 80px;
+}
+
+.blue-label {
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    background: #3d7eff;
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+}
+
+.page-header h1 {
+    margin-top: 20px;
+
+    font-family: "Anton", sans-serif;
+
+    font-size: clamp(70px, 10vw, 150px);
+
+    line-height: 0.9;
+
+    letter-spacing: -2px;
+}
+
+.page-header p {
+    margin-top: 30px;
+
+    max-width: 550px;
+
+    color: #999999;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* =====================================================
+   PROJECTS
+===================================================== */
+
+.projects-list {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.project-row {
+    display: grid;
+
+    grid-template-columns: 80px 1fr 50px;
+
+    gap: 30px;
+
+    align-items: center;
+
+    padding: 35px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+
+    transition: 0.3s ease;
+}
+
+.project-row:hover {
+    padding-left: 15px;
+
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.project-row-number {
+    color: #3d7eff;
+
+    font-family: "Anton", sans-serif;
+
+    font-size: 30px;
+}
+
+.project-category {
+    color: #777777;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+.project-row-main h2 {
+    margin-top: 8px;
+
+    font-family: "Anton", sans-serif;
+
+    font-size: 45px;
+
+    letter-spacing: 1px;
+}
+
+.project-row-main p {
+    margin-top: 8px;
+
+    max-width: 600px;
+
+    color: #888888;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.project-arrow {
+    font-size: 30px;
+
+    color: #ffffff;
+
+    transition: 0.3s ease;
+}
+
+.project-row:hover .project-arrow {
+    color: #3d7eff;
+
+    transform: translate(5px, -5px);
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+    min-height: 70px;
+
+    padding: 20px 5vw;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+    background: #111111;
+
+    color: #666666;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .navbar-links {
+        gap: 20px;
+    }
+
+    .home-container {
+        grid-template-columns: 1fr;
+
+        padding: 80px 0;
+    }
+
+    .home-left {
+        min-height: 600px;
+    }
+
+    .home-right {
+        padding-left: 0;
+
+        padding-bottom: 80px;
+    }
+
+    .home-title {
+        font-size: 100px;
+    }
+
+    .sticker-star {
+        right: 5%;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .navbar {
+        height: auto;
+
+        min-height: 70px;
+
+        padding: 20px;
+
+        flex-wrap: wrap;
+
+        gap: 20px;
+    }
+
+    .navbar-links {
+        order: 3;
+
+        width: 100%;
+
+        justify-content: center;
+
+        gap: 15px;
+
+        overflow-x: auto;
+
+        padding-bottom: 5px;
+    }
+
+    .nav-link {
+        font-size: 9px;
+
+        white-space: nowrap;
+    }
+
+    .navbar-year {
+        margin-left: auto;
+    }
+
+    .home-container {
+        width: 90%;
+
+        padding-top: 60px;
+    }
+
+    .profile-wrapper {
+        width: 280px;
+
+        height: 380px;
+    }
+
+    .circle-decoration {
+        width: 390px;
+
+        height: 390px;
+    }
+
+    .profile-name {
+        font-size: 50px;
+    }
+
+    .home-title {
+        font-size: 70px;
+    }
+
+    .home-title-overlay {
+        font-size: 38px;
+    }
+
+    .home-year {
+        right: 0;
+    }
+
+    .page-section {
+        padding: 30px 20px 70px;
+    }
+
+    .page-header {
+        padding-top: 60px;
+
+        margin-bottom: 50px;
+    }
+
+    .project-row {
+        grid-template-columns: 40px 1fr 30px;
+
+        gap: 15px;
+
+        padding: 25px 0;
+    }
+
+    .project-row-main h2 {
+        font-size: 28px;
+    }
+
+    .project-row-main p {
+        font-size: 11px;
+    }
+
+    .footer {
+        flex-direction: column;
+
+        justify-content: center;
+
+        text-align: center;
+
+        gap: 10px;
+    }
+
+    .sticker {
+        display: none;
+    }
+}

@@ -1,164 +1,420 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;600;700;800&display=swap');
+/* ==========================================================================
+   HOMEPAGE - EDITORIAL HERO (SIDE-BY-SIDE: PHOTO LEFT, TEXT RIGHT)
+   ========================================================================== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #111827;
-}
-
-.home {
-    min-height: 100vh;
-    background: #111827;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.editorial-home {
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    background-color: #08090c;
+    position: relative;
     overflow: hidden;
-}
-
-.home-container {
-    width: 90%;
-    max-width: 1250px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-}
-
-/* LEFT */
-
-.home-left {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
+    padding: 30px 6vw;
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    user-select: none;
 }
 
-.profile-wrapper {
-    width: 340px;
-    height: 450px;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, .5);
+/* Ambient Blue & Dark Background Radial Glows */
+.editorial-home::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 35% 50%, rgba(37, 99, 235, 0.16) 0%, transparent 60%),
+        radial-gradient(circle at 15% 85%, rgba(29, 78, 216, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 85% 20%, rgba(30, 58, 138, 0.12) 0%, transparent 50%),
+        #08090c;
+    pointer-events: none;
+    z-index: 0;
 }
 
-.profile-image {
+/* Vignette border */
+.editorial-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.65) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* ==========================================================================
+   BACKGROUND SILHOUETTE WATERMARK
+   ========================================================================== */
+
+.backdrop-silhouette-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    width: min(850px, 90vw);
+    height: min(850px, 90vh);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.12;
+    filter: grayscale(100%) contrast(1.35) brightness(0.6);
+    mask-image: radial-gradient(circle at center, black 35%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 70%);
+}
+
+.backdrop-silhouette-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(100%);
+    object-position: center 25%;
 }
 
-.profile-name {
-    margin-top: 18px;
-    color: #3B82F6;
-    font: 60px 'Anton', sans-serif;
-    letter-spacing: 2px;
-    text-align: center;
-    line-height: 1;
-}
+/* ==========================================================================
+   TOP EDITORIAL BAR
+   ========================================================================== */
 
-/* RIGHT */
-
-.home-right {
-    color: white;
-    padding-left: 60px;
-}
-
-.home-year {
-    color: #9CA3AF;
-    font-size: 12px;
-}
-
-.home-title {
-    font: 100px/0.9 'Anton', sans-serif;
-    margin: 20px 0;
-}
-
-.home-title span {
-    display: block;
-}
-
-.home-info {
+.editorial-topbar {
+    position: relative;
+    z-index: 10;
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.topbar-tag {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+}
+
+.topbar-meta-right {
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   CENTER HERO STAGE (SIDE-BY-SIDE: PHOTO LEFT, TEXT RIGHT)
+   ========================================================================== */
+
+.editorial-hero-stage {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    padding: 20px 0;
+}
+
+/* LEFT COLUMN: STACKED BLUE CARDS */
+.hero-photo-col {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stacked-cards-container {
+    position: relative;
+    width: min(320px, 70vw);
+    height: min(430px, 55vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Back Offset Card */
+.photo-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background:
+        radial-gradient(circle at center, #3b82f6 0%, #1d4ed8 60%, #1e3a8a 100%);
+    transform: rotate(5deg) translate(18px, -12px);
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(37, 99, 235, 0.35);
+    opacity: 0.85;
+    overflow: hidden;
+    border: 1px solid rgba(147, 197, 253, 0.25);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-back-inner-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(100%) contrast(1.3) brightness(0.85);
+    mix-blend-mode: luminosity;
+    opacity: 0.45;
+}
+
+/* Front Main Card */
+.photo-card-front {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background:
+        radial-gradient(circle at 50% 40%, #1e40af 0%, #1d4ed8 45%, #0f172a 100%);
+    transform: rotate(-1deg);
+    box-shadow:
+        0 25px 55px rgba(0, 0, 0, 0.85),
+        0 0 25px rgba(29, 78, 216, 0.3);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Blue Duotone Illumination on Portrait */
+.card-front-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    filter: grayscale(100%) contrast(1.35) brightness(1.05);
+    mix-blend-mode: luminosity;
+    transition: transform 0.5s ease;
+}
+
+.photo-card-front::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(59, 130, 246, 0.85) 0%, rgba(29, 78, 216, 0.68) 50%, rgba(15, 23, 42, 0.88) 100%);
+    mix-blend-mode: multiply;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.photo-card-front::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 45% 30%, rgba(96, 165, 250, 0.4) 0%, transparent 60%);
+    mix-blend-mode: screen;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Hover Interaction on Stacked Cards */
+.stacked-cards-container:hover .photo-card-back {
+    transform: rotate(7deg) translate(24px, -16px) scale(1.02);
+}
+
+.stacked-cards-container:hover .photo-card-front {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.stacked-cards-container:hover .card-front-photo {
+    transform: scale(1.04);
+}
+
+/* RIGHT COLUMN: HEADLINE TYPOGRAPHY & STATEMENT */
+.hero-text-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    max-width: 600px;
+}
+
+.editorial-giant-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+}
+
+.title-line {
+    display: block;
+    font-family: "Poppins", "Syne", sans-serif;
+    font-weight: 800;
+    font-size: clamp(40px, 5.8vw, 76px);
+    line-height: 0.95;
+    letter-spacing: -1.5px;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.9),
+        0 0 35px rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+}
+
+.title-line.line-1 {
+    color: #ffffff;
+}
+
+.title-line.line-2 {
+    color: #ffffff;
+}
+
+.title-line.line-3 {
+    color: #93c5fd;
+    text-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(59, 130, 246, 0.4);
+}
+
+/* Statement Box Under Headline */
+.editorial-statement-box {
     margin-top: 25px;
+    max-width: 420px;
 }
 
-.home-tag {
-    background: white;
-    color: black;
-    padding: 5px 10px;
-    font-size: 9px;
+.statement-text {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.65;
+    letter-spacing: 0.8px;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: uppercase;
+    border-left: 2px solid #3b82f6;
+    padding-left: 12px;
 }
 
-.home-description {
-    color: #D1D5DB;
-    max-width: 430px;
-    margin-top: 25px;
-    line-height: 1.8;
-    font-size: 14px;
+/* ==========================================================================
+   BOTTOM EDITORIAL BAR
+   ========================================================================== */
+
+.editorial-bottombar {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: flex-end;
+    width: 100%;
+    padding-top: 15px;
 }
 
-.home-button {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 13px 25px;
-    background: #2563EB;
-    color: white;
-    font-size: 12px;
-    border-radius: 30px;
-    text-decoration: none;
-    transition: .3s;
+.bottombar-time {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
-.home-button:hover {
-    background: white;
-    color: #2563EB;
+.time-val {
+    font-family: "Space Mono", monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #60a5fa;
 }
 
-/* RESPONSIVE */
+.time-label {
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+}
 
-@media (max-width: 900px) {
+.bottombar-center-meta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
 
-    .home-container {
-        grid-template-columns: 1fr;
-        gap: 50px;
-    }
+.center-role {
+    font-family: "Space Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 1.8px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
+    text-transform: uppercase;
+}
 
-    .profile-wrapper {
-        width: 280px;
-        height: 370px;
-    }
+.center-loc {
+    font-family: "Space Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 1.8px;
+    font-weight: 700;
+    color: #93c5fd;
+    text-transform: uppercase;
+}
 
-    .profile-name {
-        font-size: 45px;
-    }
+.bottombar-year {
+    text-align: right;
+    font-family: "Space Mono", monospace;
+    font-size: 11.5px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+}
 
-    .home-right {
-        padding-left: 0;
+/* ==========================================================================
+   RESPONSIVE DESIGN (MOBILE & TABLET)
+   ========================================================================== */
+
+@media (max-width: 960px) {
+    .editorial-hero-stage {
+        flex-direction: column;
+        gap: 35px;
         text-align: center;
     }
 
-    .home-title {
-        font-size: 70px;
+    .hero-text-col {
+        align-items: center;
+        text-align: center;
     }
 
-    .home-info {
-        justify-content: center;
+    .editorial-giant-title {
+        align-items: center;
+        text-align: center;
     }
 
-    .home-description {
-        margin-left: auto;
-        margin-right: auto;
+    .statement-text {
+        border-left: none;
+        border-bottom: 2px solid #3b82f6;
+        padding-left: 0;
+        padding-bottom: 8px;
+        display: inline-block;
+    }
+
+    .title-line {
+        font-size: clamp(34px, 8.5vw, 56px);
+    }
+}
+
+@media (max-width: 600px) {
+    .editorial-home {
+        padding: 20px 5vw;
+    }
+
+    .stacked-cards-container {
+        width: 220px;
+        height: 290px;
+    }
+
+    .title-line {
+        font-size: clamp(28px, 8vw, 42px);
+    }
+
+    .editorial-bottombar {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .bottombar-center-meta {
+        grid-column: span 2;
+        order: -1;
     }
 }

@@ -1,47 +1,51 @@
+import React from "react";
+
 const projects = [
     {
         number: "01",
         title: "RHIVA",
-        category: "AI / WEB",
+        category: "AI / NLP / WEB",
         description:
-            "Sistem analisis sentimen ulasan hotel menggunakan IndoBERT.",
+            "Sistem analisis sentimen ulasan perhotelan berbasis Natural Language Processing (NLP) memanfaatkan fine-tuned IndoBERT untuk klasifikasi opini multi-aspek dengan akurasi tinggi.",
+        tags: ["IndoBERT", "Python", "Flask/FastAPI", "React", "Tailwind CSS"],
     },
     {
         number: "02",
         title: "FASHION CNN",
-        category: "AI / MACHINE LEARNING",
+        category: "COMPUTER VISION / MACHINE LEARNING",
         description:
-            "Klasifikasi citra produk fashion menggunakan CNN.",
+            "Klasifikasi citra produk fashion multikelas menggunakan arsitektur Convolutional Neural Network (CNN) dengan preprocessing citra dan data augmentation komprehensif.",
+        tags: ["PyTorch", "CNN", "Python", "Computer Vision", "Matplotlib"],
     },
     {
         number: "03",
-        title: "WEB APPLICATION",
-        category: "WEB DEVELOPMENT",
+        title: "ENTERPRISE WEB APP",
+        category: "FULL-STACK WEB DEVELOPMENT",
         description:
-            "Website application menggunakan React dan Laravel.",
+            "Aplikasi web modern dengan autentikasi berbasis token, dashboard interaktif, manajemen data relasional, dan arsitektur RESTful API yang aman dan terstruktur.",
+        tags: ["React.js", "Laravel", "MySQL", "REST API", "Vite"],
     },
     {
         number: "04",
-        title: "3D PROJECT",
-        category: "BLENDER",
+        title: "3D VISUALIZATION",
+        category: "BLENDER / CREATIVE",
         description:
-            "Eksplorasi pemodelan dan visualisasi objek 3D.",
+            "Eksplorasi pemodelan 3D, material shading, dan visualisasi produk interaktif dengan pencahayaan sinematik dan rendering fotorealistis.",
+        tags: ["Blender 3D", "Cycles Render", "Product Design", "Lighting"],
     },
 ];
 
 function Projects() {
     return (
-        <section className="page-section">
+        <section id="projects" className="page-section">
 
             <div className="section-topbar">
                 <span>PORTFOLIO</span>
-                <span>PROJECTS</span>
+                <span>03 — FEATURED PROJECTS</span>
                 <span>2026</span>
             </div>
 
-
             <div className="page-header">
-
                 <span className="blue-label">
                     MY WORK
                 </span>
@@ -51,27 +55,18 @@ function Projects() {
                 </h1>
 
                 <p>
-                    A collection of projects, experiments
-                    and digital products I have worked on.
+                    A curated selection of software engineering, artificial intelligence, and digital products I have built and developed.
                 </p>
-
             </div>
 
-
             <div className="projects-list">
-
                 {projects.map((project) => (
-                    <article
-                        className="project-row"
-                        key={project.number}
-                    >
-
+                    <article className="project-row" key={project.number}>
                         <span className="project-row-number">
                             {project.number}
                         </span>
 
                         <div className="project-row-main">
-
                             <span className="project-category">
                                 {project.category}
                             </span>
@@ -84,15 +79,20 @@ function Projects() {
                                 {project.description}
                             </p>
 
+                            <div className="project-tech-tags">
+                                {project.tags.map((t, idx) => (
+                                    <span key={idx} className="project-tech-tag">
+                                        {t}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
 
                         <span className="project-arrow">
                             ↗
                         </span>
-
                     </article>
                 ))}
-
             </div>
 
         </section>

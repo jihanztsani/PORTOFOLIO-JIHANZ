@@ -82,13 +82,10 @@ function Home() {
                 <div className="hero-text-col">
                     <div className="editorial-giant-title">
                         <span className="title-line line-1">
-                            HELLO
-                        </span>
-                        <span className="title-line line-2">
-                            I'M JIHANZ
+                            HELLO I'M
                         </span>
                         <span className="title-line line-3">
-                            FAIRUZ TSANI
+                            JIHANZ FAIRUZ TSANI
                         </span>
                     </div>
 

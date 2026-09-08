@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "./navbar.css";
 
 function Navbar() {
     const [activeSection, setActiveSection] = useState("home");
@@ -27,6 +28,11 @@ function Navbar() {
             label: "CERTIFICATES",
             href: "#certificates",
         },
+        {
+            id: "contact",
+            label: "CONTACT",
+            href: "#contact",
+        },
     ];
 
     // Smooth scroll handler with offset for sticky navbar
@@ -48,7 +54,7 @@ function Navbar() {
     // ScrollSpy to highlight active section
     useEffect(() => {
         const handleScroll = () => {
-            const sections = ["home", "about", "activities", "projects", "certificates"];
+            const sections = ["home", "about", "activities", "projects", "certificates", "contact"];
             const scrollPosition = window.scrollY + 120;
 
             for (let i = sections.length - 1; i >= 0; i--) {

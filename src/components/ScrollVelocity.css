@@ -1,0 +1,38 @@
+.parallax {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 0;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.scroller {
+  display: flex;
+  white-space: nowrap;
+  text-align: center;
+  font-family: 'Space Mono', monospace; /* using your existing theme font */
+  font-size: 2.25rem;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+  color: #3b82f6; /* Blue matching the theme */
+  text-transform: uppercase;
+}
+
+.scroller span {
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .scroller {
+    font-size: 4rem;
+    line-height: 4rem;
+  }
+}
+
+.custom-scroll-text {
+  margin-right: 2rem;
+  opacity: 0.15;
+  color: #ffffff;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+}

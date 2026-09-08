@@ -1,0 +1,89 @@
+/* =====================================================
+   ABOUT SECTION STYLING
+===================================================== */
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.about-bio-card,
+.about-skills-card {
+    background: rgba(18, 20, 26, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.about-subheading {
+    font-family: "Space Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #60a5fa;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.about-bio-text {
+    color: #d4d4d8;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.skills-group-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.skill-group-title {
+    display: block;
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #93c5fd;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-badge {
+    background: rgba(37, 99, 235, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #f1f5f9;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+.skill-badge:hover {
+    background: #2563eb;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   RESPONSIVE ABOUT
+===================================================== */
+
+@media (max-width: 700px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .about-bio-card,
+    .about-skills-card {
+        padding: 25px 20px;
+    }
+}

@@ -1,4 +1,6 @@
 import React from "react";
+import ScrollVelocity from "../components/ScrollVelocity";
+import "./certificate.css";
 
 const certificatesList = [
     {
@@ -74,7 +76,14 @@ function Certificates() {
                     </div>
                 ))}
             </div>
-
+            <ScrollVelocity
+              texts={['Certificates', 'Achievements']} 
+              velocity={80}
+              className="custom-scroll-text"
+              numCopies={8}
+              damping={50}
+              stiffness={200}
+            />
         </section>
     );
 }

@@ -1,0 +1,294 @@
+/* =====================================================
+   ACTIVITIES SECTION STYLING
+===================================================== */
+
+/* ── Compact Activities ── */
+.act-compact-section {
+    padding-top: 50px;
+    padding-bottom: 60px;
+    min-height: unset;
+}
+
+.act-compact-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 60px;
+    padding-top: 40px;
+    flex-wrap: wrap;
+}
+
+.act-compact-left {
+    flex-shrink: 0;
+    min-width: 200px;
+}
+
+.act-compact-title {
+    font-family: "Anton", sans-serif;
+    font-size: clamp(42px, 6vw, 80px);
+    color: #ffffff;
+    line-height: 0.95;
+    letter-spacing: -1px;
+    margin-top: 14px;
+}
+
+.act-compact-sub {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #71717a;
+    letter-spacing: 1.5px;
+    font-family: "Space Mono", monospace;
+}
+
+.act-compact-pills {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 260px;
+}
+
+.act-pill {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(18, 20, 26, 0.5);
+    border-radius: 6px;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    animation: pillFadeIn 0.5s ease both;
+}
+
+@keyframes pillFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.act-pill:hover {
+    background: rgba(37, 99, 235, 0.08);
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateX(6px);
+}
+
+.act-pill-period {
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    color: #3b82f6;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    min-width: 110px;
+}
+
+.act-pill-role {
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #e4e4e7;
+    letter-spacing: 0.3px;
+}
+
+/* =====================================================
+   DOCUMENTATION SECTION (DRIFT WALL & LIGHTBOX)
+===================================================== */
+
+.doc-section {
+    background:
+        radial-gradient(circle at 20% 80%,
+            rgba(37, 99, 235, 0.1),
+            transparent 40%),
+        #0a0b0e;
+}
+
+.doc-driftwall-container {
+    width: 100%;
+    max-width: 1500px;
+    height: 750px;
+    margin: 40px auto 0;
+    overflow: hidden;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.08) 0%, #08090c 70%);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.doc-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 40px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.doc-main-title {
+    font-family: "Anton", sans-serif;
+    font-size: clamp(50px, 7vw, 90px);
+    color: #ffffff;
+    line-height: 0.95;
+    letter-spacing: -1px;
+    margin-top: 14px;
+}
+
+.doc-header-meta {
+    text-align: right;
+}
+
+.doc-meta-num {
+    display: block;
+    font-family: "Anton", sans-serif;
+    font-size: 56px;
+    color: #2563eb;
+    line-height: 1;
+}
+
+.doc-meta-label {
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #71717a;
+}
+
+/* ── Lightbox ── */
+.doc-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.93);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    animation: lbFadeIn 0.2s ease;
+}
+
+@keyframes lbFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.doc-lb-img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+    animation: lbImgIn 0.25s ease;
+}
+
+@keyframes lbImgIn {
+    from {
+        transform: scale(0.92);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.doc-lb-close,
+.doc-lb-prev,
+.doc-lb-next {
+    position: fixed;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    font-family: "Poppins", sans-serif;
+    line-height: 1;
+}
+
+.doc-lb-close {
+    top: 20px;
+    right: 24px;
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doc-lb-close:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+}
+
+.doc-lb-prev,
+.doc-lb-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    font-size: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doc-lb-prev {
+    left: 20px;
+}
+
+.doc-lb-next {
+    right: 20px;
+}
+
+.doc-lb-prev:hover,
+.doc-lb-next:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* =====================================================
+   RESPONSIVE ACTIVITIES & DOCUMENTATION
+===================================================== */
+
+@media (max-width: 1000px) {
+    .act-compact-body {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 700px) {
+    .act-compact-body {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .doc-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .doc-header-meta {
+        text-align: left;
+    }
+
+    .doc-lb-prev {
+        left: 8px;
+    }
+
+    .doc-lb-next {
+        right: 8px;
+    }
+}

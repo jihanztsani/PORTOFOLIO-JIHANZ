@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
+import DriftWall from "../components/DriftWall";
+import ScrollVelocity from "../components/ScrollVelocity";
+import "./activities.css";
 
 // ── Import all documentation images ──────────────────────────────────────────
 import doc01 from "../assets/documentation/120e40dd-8847-47de-a454-f29ebaffb6d4.jpg";
@@ -92,7 +95,7 @@ const INITIAL_SHOW = 20;
 const activitiesList = [
     { period: "2024 — PRESENT", role: "AI & NLP RESEARCHER" },
     { period: "2023 — PRESENT", role: "FULL-STACK WEB DEVELOPER" },
-    { period: "2023 — 2024",    role: "MACHINE LEARNING" },
+    { period: "2023 — 2024", role: "MACHINE LEARNING" },
     { period: "2022 — PRESENT", role: "3D & UI/UX DESIGN" },
 ];
 
@@ -121,17 +124,17 @@ function Lightbox({ src, onClose, onPrev, onNext }) {
 
 // ── Main component ────────────────────────────────────────────────────────────
 function Activities() {
-    const [lightboxIdx, setLightboxIdx]   = useState(null);
-    const [lightboxSrc, setLightboxSrc]   = useState(null);
-    const [showAll, setShowAll]           = useState(false);
-    const [visibleIdxs, setVisibleIdxs]   = useState(new Set());
-    const gridRef                         = useRef(null);
+    const [lightboxIdx, setLightboxIdx] = useState(null);
+    const [lightboxSrc, setLightboxSrc] = useState(null);
+    const [showAll, setShowAll] = useState(false);
+    const [visibleIdxs, setVisibleIdxs] = useState(new Set());
+    const gridRef = useRef(null);
 
     // Stagger reveal on mount
     useEffect(() => {
         const timer = setTimeout(() => {
             const count = showAll ? shuffledDocs.length : INITIAL_SHOW;
-            const idxs  = new Set();
+            const idxs = new Set();
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     setVisibleIdxs(prev => new Set([...prev, i]));
@@ -163,6 +166,13 @@ function Activities() {
     };
 
     const displayedDocs = showAll ? shuffledDocs : shuffledDocs.slice(0, INITIAL_SHOW);
+
+    const driftWallItems = allDocs.map((src, i) => ({
+        image: src,
+        title: `Doc ${i}`,
+        href: undefined,
+        onClick: () => openLightbox(src, i)
+    }));
 
     return (
         <>
@@ -213,68 +223,31 @@ function Activities() {
                     </div>
                 </div>
 
-                {/* Photo mosaic */}
-                <div className="doc-mosaic" ref={gridRef}>
-                    {displayedDocs.map(({ src, originalIdx }, i) => (
-                        <div
-                            key={originalIdx}
-                            className={`doc-cell doc-cell-img ${
-                                visibleIdxs.has(i) ? "doc-cell-visible" : ""
-                            }`}
-                            style={{ transitionDelay: `${(i % 20) * 35}ms` }}
-                            onClick={() => openLightbox(src, i)}
-                        >
-                            <img src={src} alt={`doc-${i}`} loading="lazy" />
-                            <div className="doc-img-overlay">
-                                <span className="doc-overlay-icon">&#43;</span>
-                            </div>
-                        </div>
-                    ))}
-
-                    {/* Text accent cells inside grid */}
-                    {!showAll && (
-                        <>
-                            <div className="doc-cell doc-cell-text doc-cell-visible" style={{ gridColumn: "span 1" }}>
-                                <span className="doc-word">MY</span>
-                            </div>
-                            <div className="doc-cell doc-cell-text doc-cell-visible" style={{ gridColumn: "span 1" }}>
-                                <span className="doc-word">LIFE</span>
-                            </div>
-                            <div className="doc-cell doc-cell-text doc-cell-visible" style={{ gridColumn: "span 1" }}>
-                                <span className="doc-word">IN</span>
-                            </div>
-                            <div className="doc-cell doc-cell-text doc-cell-visible" style={{ gridColumn: "span 1" }}>
-                                <span className="doc-word">LENS</span>
-                            </div>
-                        </>
-                    )}
-                </div>
-
-                {/* See More / Show Less */}
-                {!showAll ? (
-                    <div className="doc-seemore-row">
-                        <div className="doc-seemore-divider" />
-                        <button className="doc-seemore-btn" onClick={handleSeeMore}>
-                            <span>SEE ALL {allDocs.length} PHOTOS</span>
-                            <span className="doc-seemore-arrow">&#8595;</span>
-                        </button>
-                        <div className="doc-seemore-divider" />
-                    </div>
-                ) : (
-                    <div className="doc-seemore-row">
-                        <div className="doc-seemore-divider" />
-                        <button className="doc-seemore-btn doc-showless-btn" onClick={() => { setShowAll(false); setVisibleIdxs(new Set()); }}>
-                            <span>SHOW LESS</span>
-                            <span className="doc-seemore-arrow">&#8593;</span>
-                        </button>
-                        <div className="doc-seemore-divider" />
-                    </div>
-                )}
-
-                {/* Count bar */}
-                <div className="doc-count-bar">
-                    <span className="doc-count-num">{allDocs.length}</span>
-                    <span className="doc-count-label">PHOTOS DOCUMENTED</span>
+                <div className="doc-driftwall-container">
+                  <DriftWall
+                    items={driftWallItems}
+                    columns={6}
+                    tileWidth={210}
+                    tileHeight={140}
+                    gap={20}
+                    tilt={0}
+                    turn={0}
+                    roll={0}
+                    offsetX={0}
+                    perspective={1000}
+                    depth={0}
+                    speed={36}
+                    direction="up"
+                    variance={0.3}
+                    parallax={0}
+                    lift={30}
+                    fade={0.75}
+                    dim={0.7}
+                    overlayColor="#08090c"
+                    radius={14}
+                    pauseOnHover={false}
+                    grayscale={false}
+                  />
                 </div>
             </section>
 

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   HOMEPAGE - EDITORIAL HERO (SIDE-BY-SIDE: PHOTO LEFT, TEXT RIGHT)
+   HOMEPAGE - EDITORIAL WRAPPER & BARS
    ========================================================================== */
 
 .editorial-home {
@@ -49,21 +49,24 @@
     top: 50%;
     left: 40%;
     transform: translate(-50%, -50%);
-    width: min(850px, 90vw);
-    height: min(850px, 90vh);
+    width: 75vw;
+    max-width: 950px;
+    height: 85vh;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.12;
-    filter: grayscale(100%) contrast(1.35) brightness(0.6);
-    mask-image: radial-gradient(circle at center, black 35%, transparent 70%);
-    -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 70%);
+    overflow: hidden;
+    opacity: 0.13;
+    filter: grayscale(100%) contrast(1.6) brightness(0.7);
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
 }
 
 .backdrop-silhouette-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 25%;
+    object-position: center 20%;
+    transform: scale(1.15);
 }
 
 /* ==========================================================================
@@ -77,14 +80,16 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .topbar-tag {
     font-family: "Space Mono", monospace;
     font-size: 11px;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.6);
+    color: #60a5fa;
     text-transform: uppercase;
 }
 
@@ -92,202 +97,8 @@
     font-family: "Space Mono", monospace;
     font-size: 10px;
     letter-spacing: 2px;
-    font-weight: 700;
     color: rgba(255, 255, 255, 0.4);
     text-transform: uppercase;
-}
-
-/* ==========================================================================
-   CENTER HERO STAGE (SIDE-BY-SIDE: PHOTO LEFT, TEXT RIGHT)
-   ========================================================================== */
-
-.editorial-hero-stage {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 60px;
-    padding: 20px 0;
-}
-
-/* LEFT COLUMN: STACKED BLUE CARDS */
-.hero-photo-col {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.stacked-cards-container {
-    position: relative;
-    width: min(320px, 70vw);
-    height: min(430px, 55vh);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Back Offset Card */
-.photo-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    background:
-        radial-gradient(circle at center, #3b82f6 0%, #1d4ed8 60%, #1e3a8a 100%);
-    transform: rotate(5deg) translate(18px, -12px);
-    box-shadow:
-        0 20px 45px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(37, 99, 235, 0.35);
-    opacity: 0.85;
-    overflow: hidden;
-    border: 1px solid rgba(147, 197, 253, 0.25);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.card-back-inner-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    filter: grayscale(100%) contrast(1.3) brightness(0.85);
-    mix-blend-mode: luminosity;
-    opacity: 0.45;
-}
-
-/* Front Main Card */
-.photo-card-front {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    background:
-        radial-gradient(circle at 50% 40%, #1e40af 0%, #1d4ed8 45%, #0f172a 100%);
-    transform: rotate(-1deg);
-    box-shadow:
-        0 25px 55px rgba(0, 0, 0, 0.85),
-        0 0 25px rgba(29, 78, 216, 0.3);
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Blue Duotone Illumination on Portrait */
-.card-front-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 20%;
-    filter: grayscale(100%) contrast(1.35) brightness(1.05);
-    mix-blend-mode: luminosity;
-    transition: transform 0.5s ease;
-}
-
-.photo-card-front::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(135deg, rgba(59, 130, 246, 0.85) 0%, rgba(29, 78, 216, 0.68) 50%, rgba(15, 23, 42, 0.88) 100%);
-    mix-blend-mode: multiply;
-    z-index: 2;
-    pointer-events: none;
-}
-
-.photo-card-front::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 45% 30%, rgba(96, 165, 250, 0.4) 0%, transparent 60%);
-    mix-blend-mode: screen;
-    z-index: 3;
-    pointer-events: none;
-}
-
-/* Hover Interaction on Stacked Cards */
-.stacked-cards-container:hover .photo-card-back {
-    transform: rotate(7deg) translate(24px, -16px) scale(1.02);
-}
-
-.stacked-cards-container:hover .photo-card-front {
-    transform: rotate(0deg) scale(1.02);
-}
-
-.stacked-cards-container:hover .card-front-photo {
-    transform: scale(1.04);
-}
-
-/* RIGHT COLUMN: HEADLINE TYPOGRAPHY & STATEMENT */
-.hero-text-col {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-    max-width: 600px;
-}
-
-.editorial-giant-title {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    width: 100%;
-}
-
-.title-line {
-    display: block;
-    font-family: "Poppins", "Syne", sans-serif;
-    font-weight: 800;
-    font-size: clamp(40px, 5.8vw, 76px);
-    line-height: 0.95;
-    letter-spacing: -1.5px;
-    color: #ffffff;
-    text-transform: uppercase;
-    text-shadow:
-        0 4px 18px rgba(0, 0, 0, 0.9),
-        0 0 35px rgba(0, 0, 0, 0.7);
-    white-space: nowrap;
-}
-
-.title-line.line-1 {
-    color: #ffffff;
-}
-
-.title-line.line-2 {
-    color: #ffffff;
-}
-
-.title-line.line-3 {
-    color: #93c5fd;
-    text-shadow:
-        0 4px 18px rgba(0, 0, 0, 0.9),
-        0 0 30px rgba(59, 130, 246, 0.4);
-}
-
-/* Statement Box Under Headline */
-.editorial-statement-box {
-    margin-top: 25px;
-    max-width: 420px;
-}
-
-.statement-text {
-    font-family: "Space Mono", monospace;
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1.65;
-    letter-spacing: 0.8px;
-    color: rgba(255, 255, 255, 0.75);
-    text-transform: uppercase;
-    border-left: 2px solid #3b82f6;
-    padding-left: 12px;
 }
 
 /* ==========================================================================
@@ -364,48 +175,9 @@
    RESPONSIVE DESIGN (MOBILE & TABLET)
    ========================================================================== */
 
-@media (max-width: 960px) {
-    .editorial-hero-stage {
-        flex-direction: column;
-        gap: 35px;
-        text-align: center;
-    }
-
-    .hero-text-col {
-        align-items: center;
-        text-align: center;
-    }
-
-    .editorial-giant-title {
-        align-items: center;
-        text-align: center;
-    }
-
-    .statement-text {
-        border-left: none;
-        border-bottom: 2px solid #3b82f6;
-        padding-left: 0;
-        padding-bottom: 8px;
-        display: inline-block;
-    }
-
-    .title-line {
-        font-size: clamp(34px, 8.5vw, 56px);
-    }
-}
-
 @media (max-width: 600px) {
     .editorial-home {
         padding: 20px 5vw;
-    }
-
-    .stacked-cards-container {
-        width: 220px;
-        height: 290px;
-    }
-
-    .title-line {
-        font-size: clamp(28px, 8vw, 42px);
     }
 
     .editorial-bottombar {

@@ -24,7 +24,7 @@ function SinglePagePortfolio() {
         const path = location.pathname.replace("/", "");
         const targetId = location.hash ? location.hash.replace("#", "") : path;
 
-        if (targetId && ["about", "activities", "projects", "certificates", "home"].includes(targetId)) {
+        if (targetId && ["about", "activities", "projects", "certificates", "home", "contact"].includes(targetId)) {
             setTimeout(() => {
                 const el = document.getElementById(targetId);
                 if (el) {
@@ -61,6 +61,7 @@ function App() {
                     <Route path="/activities" element={<SinglePagePortfolio />} />
                     <Route path="/projects" element={<SinglePagePortfolio />} />
                     <Route path="/certificates" element={<SinglePagePortfolio />} />
+                    <Route path="/contact" element={<SinglePagePortfolio />} />
                     <Route path="*" element={<SinglePagePortfolio />} />
                 </Routes>
             </MainLayout>

@@ -369,48 +369,56 @@
     box-shadow: 0 0 16px rgba(59, 130, 246, 0.7);
 }
 
-/* Volume Slider */
+/* Volume Wake Slider */
 .volume-wrapper {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
-.volume-slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 58px;
-    height: 4px;
-    border-radius: 2px;
-    background: rgba(255, 255, 255, 0.2);
-    outline: none;
+.music-wake-slider-container {
+    width: 82px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+}
+
+.wake-slider-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2.5px;
+    height: 26px;
+    width: 100%;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
     cursor: pointer;
-    transition: background 0.2s ease;
 }
 
-.volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
+.wake-bar {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100%;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.18);
+    transform: scaleY(0.27);
+    transform-origin: 50% 50%;
+    transition: background-color 120ms ease;
+}
+
+.wake-bar[data-on="true"] {
     background: #60a5fa;
-    box-shadow: 0 0 6px #3b82f6;
-    cursor: pointer;
-    transition: transform 0.15s ease;
+    box-shadow: 0 0 6px rgba(96, 165, 250, 0.4);
 }
 
-.volume-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.25);
-}
-
-.volume-slider::-moz-range-thumb {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #60a5fa;
-    border: none;
-    cursor: pointer;
+.wake-crest {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: #ffffff;
+    opacity: 0;
 }
 
 .minimize-btn {
@@ -456,8 +464,8 @@
         padding: 6px 10px 6px 6px;
     }
 
-    .volume-slider {
-        width: 44px;
+    .music-wake-slider-container {
+        width: 66px;
     }
 
     .music-prompt-toast {

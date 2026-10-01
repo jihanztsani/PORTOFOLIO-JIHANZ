@@ -1,7 +1,107 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { frame, useMotionValue, useSpring, useVelocity } from "motion/react";
 import "./MusicPlayer.css";
 
 const START_OFFSET_SECONDS = 18;
+
+// Compact WakeSlider (React Bits wake physics)
+function WakeSlider({ value = 50, onChange, bars = 18 }) {
+    const pct = Math.min(100, Math.max(0, value));
+    const rest = 7 / 26;
+    const barEls = useRef([]);
+    const crestEls = useRef([]);
+    const trackRef = useRef(null);
+    const pointerId = useRef(null);
+    const lastAmp = useRef(0);
+
+    const target = useMotionValue(pct);
+    const head = useSpring(target, { stiffness: 900, damping: 60, mass: 1 });
+    const rawSpeed = useVelocity(head);
+    const speed = useSpring(rawSpeed, { stiffness: 450, damping: 50, mass: 1 });
+
+    useEffect(() => {
+        target.set(pct);
+    }, [pct, target]);
+
+    const paint = useCallback((force = false) => {
+        const h = (head.get() / 100) * (bars - 1);
+        const v = speed.get();
+        const amp = Math.min(1, Math.max(0, (Math.abs(v) * 1.2) / 320));
+        const dir = Math.sign(v) || 1;
+        const r = 1.5 + 3.5 * amp;
+        const lit = head.get() <= 0.1 ? -1 : Math.round(h);
+        const flat = !force && amp < 0.002 && lastAmp.current < 0.002;
+
+        for (let i = 0; i < bars; i++) {
+            const el = barEls.current[i];
+            if (!el) continue;
+            const on = i <= lit ? "true" : "false";
+            if (el.dataset.on !== on) el.dataset.on = on;
+            if (flat) continue;
+            const d = i - h;
+            const R = d * dir < 0 ? r * 1.5 : r * 0.75;
+            const lift = Math.abs(d) < R ? amp * Math.cos((Math.PI * d) / (2 * R)) ** 2 : 0;
+            el.style.transform = `scaleY(${rest + lift * (1 - rest)})`;
+            if (crestEls.current[i]) crestEls.current[i].style.opacity = String(lift);
+        }
+        lastAmp.current = amp;
+    }, [bars, head, speed, rest]);
+
+    useEffect(() => {
+        const schedule = () => frame.render(() => paint(), false, true);
+        const unsubHead = head.on("change", schedule);
+        const unsubSpeed = speed.on("change", schedule);
+        paint(true);
+        return () => {
+            unsubHead();
+            unsubSpeed();
+        };
+    }, [head, speed, paint]);
+
+    const commitFromX = (clientX) => {
+        const track = trackRef.current;
+        if (!track) return;
+        const rect = track.getBoundingClientRect();
+        if (!rect.width) return;
+        const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+        onChange?.(Math.round(ratio * 100));
+    };
+
+    return (
+        <div
+            ref={trackRef}
+            className="wake-slider-track"
+            onPointerDown={(e) => {
+                pointerId.current = e.pointerId;
+                try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+                commitFromX(e.clientX);
+            }}
+            onPointerMove={(e) => {
+                if (e.pointerId === pointerId.current) commitFromX(e.clientX);
+            }}
+            onPointerUp={(e) => {
+                if (e.pointerId === pointerId.current) {
+                    try { e.currentTarget.releasePointerCapture(e.pointerId); } catch {}
+                    pointerId.current = null;
+                }
+            }}
+            onPointerCancel={() => { pointerId.current = null; }}
+        >
+            {Array.from({ length: bars }, (_, i) => (
+                <span
+                    key={i}
+                    ref={(el) => { barEls.current[i] = el; }}
+                    className="wake-bar"
+                >
+                    <span
+                        ref={(el) => { crestEls.current[i] = el; }}
+                        className="wake-crest"
+                    />
+                </span>
+            ))}
+        </div>
+    );
+}
 
 function MusicPlayer() {
     const audioRef = useRef(null);
@@ -124,9 +224,9 @@ function MusicPlayer() {
     };
 
     // Handle Volume Change
-    const handleVolumeChange = (e) => {
-        e?.stopPropagation();
-        const newVol = parseFloat(e.target.value);
+    const handleVolumeChange = (newVal) => {
+        const valNum = typeof newVal === "number" ? newVal : parseFloat(newVal?.target?.value ?? 50);
+        const newVol = Math.max(0, Math.min(1, valNum > 1 ? valNum / 100 : valNum));
         setVolume(newVol);
         if (audioRef.current) {
             audioRef.current.volume = newVol;
@@ -153,7 +253,7 @@ function MusicPlayer() {
             setVolume(restoreVol);
             audio.volume = restoreVol;
         } else {
-            setPrevVolume(volume);
+            setPrevVolume(volume > 0 ? volume : 0.5);
             audio.muted = true;
             setIsMuted(true);
             setVolume(0);
@@ -276,7 +376,7 @@ function MusicPlayer() {
                             </button>
 
                             {/* Volume & Mute Section */}
-                            <div className="volume-wrapper">
+                            <div className="volume-wrapper" onClick={(e) => e.stopPropagation()}>
                                 <button
                                     type="button"
                                     className="control-btn mute-btn"
@@ -303,17 +403,16 @@ function MusicPlayer() {
                                         </svg>
                                     )}
                                 </button>
-                                <input
-                                    type="range"
-                                    min="0"
-                                    max="1"
-                                    step="0.02"
-                                    value={isMuted ? 0 : volume}
-                                    onChange={handleVolumeChange}
-                                    className="volume-slider"
-                                    aria-label="Volume slider"
+                                <div
+                                    className="music-wake-slider-container"
                                     title={`Volume: ${Math.round((isMuted ? 0 : volume) * 100)}%`}
-                                />
+                                >
+                                    <WakeSlider
+                                        value={isMuted ? 0 : Math.round(volume * 100)}
+                                        onChange={handleVolumeChange}
+                                        bars={18}
+                                    />
+                                </div>
                             </div>
 
                             {/* Collapse Widget Button */}

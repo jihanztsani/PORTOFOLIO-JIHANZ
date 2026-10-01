@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     BrowserRouter,
     Routes,
@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import MainLayout from "./layouts/mainlayout";
+import LaunchingPage from "./components/LaunchingPage";
 
 import Home from "./pages/home";
 import About from "./pages/about";
@@ -52,8 +53,11 @@ function SinglePagePortfolio() {
 }
 
 function App() {
+    const [isLaunched, setIsLaunched] = useState(false);
+
     return (
         <BrowserRouter>
+            {!isLaunched && <LaunchingPage onFinish={() => setIsLaunched(true)} />}
             <MainLayout>
                 <Routes>
                     <Route path="/" element={<SinglePagePortfolio />} />

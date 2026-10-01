@@ -1,0 +1,467 @@
+/* =====================================================
+   FLOATING MUSIC PLAYER STYLES
+   Kendrick Lamar - Not Like Us
+===================================================== */
+
+.music-player-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    user-select: none;
+    pointer-events: auto;
+}
+
+/* -----------------------------------------------------
+   Autoplay Prompt Toast
+----------------------------------------------------- */
+.music-prompt-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(59, 130, 246, 0.2);
+    padding: 8px 14px;
+    border-radius: 9999px;
+    cursor: pointer;
+    animation: toastSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.music-prompt-toast:hover {
+    transform: translateY(-2px);
+    border-color: rgba(96, 165, 250, 0.6);
+}
+
+.toast-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3b82f6;
+    box-shadow: 0 0 10px #60a5fa;
+    animation: pulseRing 1.5s infinite;
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    }
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+    }
+    100% {
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+}
+
+.toast-text {
+    font-size: 11.5px;
+    color: #e2e8f0;
+    white-space: nowrap;
+}
+
+.toast-text strong {
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+.toast-close-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0 2px;
+    margin-left: 4px;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.toast-close-btn:hover {
+    color: #ffffff;
+}
+
+@keyframes toastSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* -----------------------------------------------------
+   Main Card
+----------------------------------------------------- */
+.music-player-card {
+    display: flex;
+    align-items: center;
+    background: rgba(13, 15, 22, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 40px;
+    padding: 8px 12px 8px 8px;
+    box-shadow:
+        0 20px 40px -10px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(37, 99, 235, 0.12);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    max-width: 380px;
+}
+
+.music-player-card.is-playing {
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow:
+        0 20px 40px -10px rgba(0, 0, 0, 0.7),
+        0 0 25px rgba(37, 99, 235, 0.25);
+}
+
+.music-player-card.collapsed {
+    padding: 6px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.music-player-card.collapsed:hover {
+    transform: scale(1.06);
+    border-color: rgba(96, 165, 250, 0.5);
+}
+
+/* -----------------------------------------------------
+   Vinyl Disc
+----------------------------------------------------- */
+.vinyl-wrapper {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vinyl-disc {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #222226 25%, #0e0e11 70%, #000000 100%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 0 3px rgba(255, 255, 255, 0.15);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.vinyl-groove {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.vinyl-groove.groove-inner {
+    width: 22px;
+    height: 22px;
+    border-style: dotted;
+}
+
+.vinyl-center {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.8);
+    position: relative;
+    z-index: 2;
+}
+
+.vinyl-star {
+    font-size: 8px;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.vinyl-disc.spinning {
+    animation: spinVinyl 3.6s linear infinite;
+}
+
+@keyframes spinVinyl {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.vinyl-play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    color: #ffffff;
+    transition: opacity 0.2s ease;
+    z-index: 3;
+}
+
+.vinyl-wrapper:hover .vinyl-play-overlay {
+    opacity: 1;
+}
+
+/* -----------------------------------------------------
+   Music Info & Meta
+----------------------------------------------------- */
+.music-info-group {
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+    margin-right: 6px;
+    min-width: 190px;
+}
+
+.track-meta {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.track-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.track-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px;
+}
+
+.track-artist {
+    font-size: 10.5px;
+    color: #94a3b8;
+    font-family: "Space Mono", monospace;
+    letter-spacing: 0.5px;
+}
+
+/* -----------------------------------------------------
+   Equalizer Animated Bars
+----------------------------------------------------- */
+.equalizer-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2.5px;
+    height: 12px;
+    padding-bottom: 1px;
+}
+
+.equalizer-bars .bar {
+    width: 2.5px;
+    height: 4px;
+    background: #3b82f6;
+    border-radius: 2px;
+    transition: height 0.2s ease;
+}
+
+.equalizer-bars.active .bar-1 {
+    animation: eqBounce 0.7s ease-in-out infinite alternate;
+}
+
+.equalizer-bars.active .bar-2 {
+    animation: eqBounce 0.5s ease-in-out infinite alternate 0.15s;
+}
+
+.equalizer-bars.active .bar-3 {
+    animation: eqBounce 0.8s ease-in-out infinite alternate 0.3s;
+}
+
+.equalizer-bars.active .bar-4 {
+    animation: eqBounce 0.6s ease-in-out infinite alternate 0.1s;
+}
+
+@keyframes eqBounce {
+    0% {
+        height: 3px;
+        background: #2563eb;
+    }
+    100% {
+        height: 13px;
+        background: #60a5fa;
+        box-shadow: 0 0 6px #60a5fa;
+    }
+}
+
+/* -----------------------------------------------------
+   Controls Row
+----------------------------------------------------- */
+.music-controls-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: scale(1.06);
+}
+
+.play-btn {
+    background: #2563eb;
+    border-color: #3b82f6;
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+    box-shadow: 0 0 12px rgba(37, 99, 235, 0.5);
+}
+
+.play-btn:hover {
+    background: #1d4ed8;
+    border-color: #60a5fa;
+    box-shadow: 0 0 16px rgba(59, 130, 246, 0.7);
+}
+
+/* Volume Slider */
+.volume-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 58px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #60a5fa;
+    box-shadow: 0 0 6px #3b82f6;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #60a5fa;
+    border: none;
+    cursor: pointer;
+}
+
+.minimize-btn {
+    width: 24px;
+    height: 24px;
+    margin-left: auto;
+    opacity: 0.6;
+}
+
+.minimize-btn:hover {
+    opacity: 1;
+}
+
+.collapsed-expand-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    margin-left: 4px;
+    padding: 2px 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.collapsed-expand-btn:hover {
+    color: #ffffff;
+}
+
+/* -----------------------------------------------------
+   Responsive Adjustments
+----------------------------------------------------- */
+@media (max-width: 600px) {
+    .music-player-container {
+        bottom: 16px;
+        right: 16px;
+        max-width: calc(100vw - 32px);
+    }
+
+    .music-player-card {
+        max-width: 100%;
+        padding: 6px 10px 6px 6px;
+    }
+
+    .volume-slider {
+        width: 44px;
+    }
+
+    .music-prompt-toast {
+        font-size: 10.5px;
+        padding: 6px 12px;
+    }
+}

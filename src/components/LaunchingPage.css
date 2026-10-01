@@ -1,0 +1,290 @@
+/* =====================================================
+   FULLSCREEN OPENING LAUNCHING SCREEN
+   WELCOME TO MY PORTOFOLIO - SCROLL TO ENTER
+===================================================== */
+
+.launching-opening-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999; /* Covers everything including the Navbar */
+    background: #08090c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    contain: paint layout;
+}
+
+/* -----------------------------------------------------
+   Two-Phase Animation (Extended to 3.2s):
+   1. Active Scroll Down Motion (Long, satisfying scroll travel)
+   2. Cinematic Fade Out into the Portfolio
+----------------------------------------------------- */
+.launching-opening-overlay.is-scrolling-down {
+    pointer-events: none;
+    animation: scrollDownAndFade 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scrollDownAndFade {
+    0% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+    20% {
+        /* Fase 1A: Scroll down mulai bergerak stabil */
+        transform: translate3d(0, -18vh, 0);
+        opacity: 1;
+    }
+    42% {
+        /* Fase 1B: Scroll down berlanjut, momentum terasa */
+        transform: translate3d(0, -38vh, 0);
+        opacity: 1;
+    }
+    62% {
+        /* Fase 1C: Scroll masih berjalan */
+        transform: translate3d(0, -60vh, 0);
+        opacity: 0.9;
+    }
+    82% {
+        /* Fase 2: Transisi fade out halus mulai terasa */
+        transform: translate3d(0, -82vh, 0);
+        opacity: 0.4;
+    }
+    100% {
+        /* Selesai: Meluncur tuntas dan fade out sempurna ke porto */
+        transform: translate3d(0, -108vh, 0);
+        opacity: 0;
+    }
+}
+
+/* Subtle Ambient Center Glow - Optimized multi-stop gradient (super lightweight on GPU) */
+.launch-glow-center {
+    position: absolute;
+    width: 650px;
+    height: 650px;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.14) 0%, rgba(37, 99, 235, 0.05) 45%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: 1;
+    will-change: transform;
+}
+
+/* Content Container */
+.launching-content-container {
+    position: relative;
+    z-index: 10;
+    max-width: 1100px;
+    width: 92%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+}
+
+.launching-opening-overlay.is-scrolling-down .launching-content-container {
+    animation: contentParallaxScroll 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes contentParallaxScroll {
+    0% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+    42% {
+        transform: translate3d(0, -45px, 0);
+        opacity: 1;
+    }
+    62% {
+        transform: translate3d(0, -80px, 0);
+        opacity: 0.85;
+    }
+    82% {
+        transform: translate3d(0, -120px, 0);
+        opacity: 0.35;
+    }
+    100% {
+        transform: translate3d(0, -160px, 0);
+        opacity: 0;
+    }
+}
+
+/* StrokeText Wrapper */
+.launch-stroke-wrapper {
+    width: 100%;
+    max-width: 1020px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 0;
+    padding: 0 16px;
+}
+
+.launch-stroke-single {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.launch-stroke-multi {
+    width: 100%;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.stroke-line-item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-launch-stroke {
+    width: 100%;
+    filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.4));
+}
+
+.custom-launch-stroke text {
+    font-family: "Poppins", sans-serif !important;
+}
+
+/* -----------------------------------------------------
+   Minimalist Scroll Down Indicator
+----------------------------------------------------- */
+.scroll-indicator {
+    position: absolute;
+    bottom: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    animation: indicatorFloat 2.4s ease-in-out infinite alternate;
+    transition: opacity 0.3s ease;
+}
+
+.launching-opening-overlay.is-scrolling-down .scroll-indicator {
+    animation: indicatorDropOut 0.4s ease-out forwards;
+}
+
+@keyframes indicatorDropOut {
+    0% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate3d(0, 20px, 0);
+        opacity: 0;
+    }
+}
+
+.scroll-text {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #93c5fd;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.scroll-indicator:hover .scroll-text {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(147, 197, 253, 0.6);
+}
+
+.scroll-icon {
+    width: 22px;
+    height: 36px;
+    border: 1.5px solid rgba(59, 130, 246, 0.4);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    transition: all 0.3s ease;
+}
+
+.scroll-indicator:hover .scroll-icon {
+    border-color: #60a5fa;
+    box-shadow: 0 0 14px rgba(59, 130, 246, 0.5);
+}
+
+.scroll-wheel {
+    width: 3px;
+    height: 7px;
+    background: #60a5fa;
+    border-radius: 2px;
+    box-shadow: 0 0 8px #3b82f6;
+    animation: scrollWheelBob 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes scrollWheelBob {
+    0% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate3d(0, 12px, 0);
+        opacity: 0;
+    }
+}
+
+@keyframes indicatorFloat {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(0, -6px, 0);
+    }
+}
+
+/* -----------------------------------------------------
+   Responsive Design
+----------------------------------------------------- */
+@media (max-width: 768px) {
+    .launch-stroke-wrapper {
+        max-width: 100%;
+        padding: 0 12px;
+    }
+
+    .launch-stroke-multi {
+        max-width: 96vw;
+        gap: 4px;
+    }
+
+    .scroll-indicator {
+        bottom: 25px;
+    }
+
+    .scroll-text {
+        font-size: 9.5px;
+        letter-spacing: 2px;
+    }
+
+    .scroll-icon {
+        width: 18px;
+        height: 30px;
+    }
+}

@@ -203,14 +203,17 @@
 
 .vinyl-disc.spinning {
     animation: spinVinyl 3.6s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 @keyframes spinVinyl {
     from {
-        transform: rotate(0deg);
+        transform: rotate(0deg) translateZ(0);
     }
     to {
-        transform: rotate(360deg);
+        transform: rotate(360deg) translateZ(0);
     }
 }
 
@@ -293,6 +296,9 @@
     height: 4px;
     background: #3b82f6;
     border-radius: 2px;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
     transition: height 0.2s ease;
 }
 

@@ -12,13 +12,84 @@
 
 html {
     scroll-behavior: smooth;
+    /* Prevent layout thrashing on scroll */
+    overflow-y: scroll;
 }
 
 body {
     font-family: "Poppins", sans-serif;
     background: #111111;
     color: #ffffff;
+    /* Ensure the entire page is composited on the GPU */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
 }
+
+/* =====================================================
+   GLOBAL GPU ACCELERATION FOR ANIMATED ELEMENTS
+   Promote elements that animate to their own
+   compositor layers so the browser doesn't have
+   to repaint surrounding content every frame.
+===================================================== */
+
+/* Any element running a CSS keyframe animation or
+   JS-driven transform gets its own GPU layer.      */
+[style*="transform"],
+[style*="opacity"],
+canvas {
+    /* will-change: auto is intentionally left to
+       child elements so we don't promote everything */
+}
+
+/* Scrolling velocity marquee rows */
+.parallax,
+.scroller {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* DriftWall columns already have will-change; ensure
+   the tile transitions use only compositor props.  */
+.drift-wall__inner,
+.drift-wall__tile img,
+.drift-wall__overlay {
+    /* transition only compositor-safe properties   */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Music player vinyl + eq bars */
+.vinyl-disc,
+.equalizer-bars .bar {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Hero 3D model canvas wrapper */
+.hero-3d-container canvas {
+    display: block;
+    image-rendering: auto;
+}
+
+/* Launching page overlay */
+.launching-opening-overlay,
+.launching-content-container {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Navbar blur — keep on its own layer */
+.sticky-navbar {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+
 
 a {
     color: inherit;

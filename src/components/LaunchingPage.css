@@ -21,7 +21,10 @@
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    /* Isolate painting to this layer only */
     contain: paint layout;
+    /* Allow browser to skip repaints of parent content */
+    isolation: isolate;
 }
 
 /* -----------------------------------------------------
@@ -237,6 +240,7 @@
     background: #60a5fa;
     border-radius: 2px;
     box-shadow: 0 0 8px #3b82f6;
+    will-change: transform, opacity;
     animation: scrollWheelBob 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
@@ -258,6 +262,11 @@
     100% {
         transform: translate3d(0, -6px, 0);
     }
+}
+
+/* Promote floating indicator to own layer */
+.scroll-indicator {
+    will-change: transform;
 }
 
 /* -----------------------------------------------------

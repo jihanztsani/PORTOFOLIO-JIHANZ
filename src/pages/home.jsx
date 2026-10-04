@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import profilePhoto from "../assets/foto 1.jpeg";
 import Hero from "./hero";
 import "./home.css";
 
@@ -30,15 +29,6 @@ function Home() {
 
             {/* VIGNETTE OVERLAY */}
             <div className="editorial-vignette"></div>
-
-            {/* BACKGROUND SILHOUETTE WATERMARK */}
-            <div className="backdrop-silhouette-wrapper">
-                <img
-                    src={profilePhoto}
-                    alt="Jihanz Fairuz Tsani Backdrop"
-                    className="backdrop-silhouette-img"
-                />
-            </div>
 
             {/* TOP EDITORIAL BAR */}
             <div className="editorial-topbar">

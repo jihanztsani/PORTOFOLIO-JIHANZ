@@ -1,28 +1,13 @@
 import React from "react";
-import profilePhoto from "../assets/foto 1.jpeg";
+import Hero3DModel from "../components/Hero3DModel";
 import "./hero.css";
 
 function Hero() {
     return (
         <div className="editorial-hero-stage">
-            {/* LEFT COLUMN: CARD STACK WITH HOVER EFFECT */}
-            <div className="hero-photo-col">
-                <div className="card-stack">
-                    {/* Back Card One (blue) */}
-                    <div className="card one"></div>
-
-                    {/* Back Card Two (blue) */}
-                    <div className="card two"></div>
-
-                    {/* Front Main Card with Photo */}
-                    <div className="card main">
-                        <img
-                            src={profilePhoto}
-                            alt="Jihanz Fairuz Tsani"
-                            className="card-main-photo"
-                        />
-                    </div>
-                </div>
+            {/* LEFT COLUMN: ROTATING 3D MODEL */}
+            <div className="hero-model-col">
+                <Hero3DModel />
             </div>
 
             {/* RIGHT COLUMN: HEADLINE TYPOGRAPHY & STATEMENT */}

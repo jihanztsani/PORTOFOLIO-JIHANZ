@@ -15,6 +15,9 @@
     color: #ffffff;
     font-family: "Poppins", sans-serif;
     user-select: none;
+    /* Isolate this section — changes here don't trigger repaints above/below */
+    contain: layout;
+    isolation: isolate;
 }
 
 /* Ambient Blue & Dark Background Radial Glows */
@@ -48,7 +51,7 @@
     position: absolute;
     top: 50%;
     left: 40%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translateZ(0);
     width: 75vw;
     max-width: 950px;
     height: 85vh;
@@ -59,6 +62,9 @@
     filter: grayscale(100%) contrast(1.6) brightness(0.7);
     mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
     -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    /* Static element on its own layer so it doesn't block compositor */
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .backdrop-silhouette-img {
@@ -66,7 +72,7 @@
     height: 100%;
     object-fit: cover;
     object-position: center 20%;
-    transform: scale(1.15);
+    transform: scale(1.15) translateZ(0);
 }
 
 /* ==========================================================================

@@ -10,24 +10,30 @@
 
 .about-bio-card,
 .about-skills-card {
-    background: rgba(18, 20, 26, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
     border-radius: 4px;
     padding: 35px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="light"] .about-bio-card,
+[data-theme="light"] .about-skills-card {
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.07), 0 1px 4px rgba(15, 23, 42, 0.05);
 }
 
 .about-subheading {
     font-family: "Space Mono", monospace;
     font-size: 12px;
     letter-spacing: 2px;
-    color: #60a5fa;
+    color: var(--blue-400);
     margin-bottom: 20px;
     font-weight: 700;
 }
 
 .about-bio-text {
-    color: #d4d4d8;
+    color: var(--text-secondary);
     font-size: 14px;
     line-height: 1.8;
 }
@@ -43,7 +49,7 @@
     font-family: "Space Mono", monospace;
     font-size: 10px;
     letter-spacing: 1.5px;
-    color: #93c5fd;
+    color: var(--blue-300);
     margin-bottom: 8px;
     font-weight: 700;
 }
@@ -55,20 +61,21 @@
 }
 
 .skill-badge {
-    background: rgba(37, 99, 235, 0.15);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    color: #f1f5f9;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    color: var(--badge-text);
     font-size: 11px;
     font-weight: 500;
     padding: 5px 12px;
     border-radius: 20px;
     letter-spacing: 0.5px;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 .skill-badge:hover {
-    background: #2563eb;
+    background: var(--blue-600);
     color: #ffffff;
+    border-color: var(--blue-600);
     transform: translateY(-2px);
 }
 

@@ -1,6 +1,166 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 /* =====================================================
+   THEME CSS VARIABLES
+   Dark mode = default. Light mode overrides via
+   [data-theme="light"] on <html>.
+===================================================== */
+
+:root,
+[data-theme="dark"] {
+    /* Core backgrounds */
+    --bg-base:       #08090c;
+    --bg-site:       #111111;
+    --bg-section:    #0a0b0e;
+    --bg-card:       rgba(18, 20, 26, 0.65);
+    --bg-card-solid: #12141a;
+    --bg-nav:        rgba(10, 11, 14, 0.85);
+    --bg-input:      rgba(18, 20, 26, 0.65);
+
+    /* Text */
+    --text-primary:   #ffffff;
+    --text-secondary: #a1a1aa;
+    --text-muted:     #71717a;
+    --text-dim:       #888888;
+    --text-faint:     #64748b;
+
+    /* Borders */
+    --border-subtle:  rgba(255, 255, 255, 0.08);
+    --border-medium:  rgba(255, 255, 255, 0.12);
+    --border-strong:  rgba(255, 255, 255, 0.15);
+
+    /* Blue accent (unchanged in both modes) */
+    --blue-500:  #3b82f6;
+    --blue-600:  #2563eb;
+    --blue-700:  #1d4ed8;
+    --blue-400:  #60a5fa;
+    --blue-300:  #93c5fd;
+    --blue-glow: rgba(59, 130, 246, 0.4);
+
+    /* Section gradient */
+    --section-gradient: radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.12), transparent 35%);
+    --home-gradient:
+        radial-gradient(circle at 35% 50%, rgba(37, 99, 235, 0.16) 0%, transparent 60%),
+        radial-gradient(circle at 15% 85%, rgba(29, 78, 216, 0.10) 0%, transparent 50%),
+        radial-gradient(circle at 85% 20%, rgba(30, 58, 138, 0.12) 0%, transparent 50%),
+        #08090c;
+
+    /* Navbar underline accent */
+    --nav-accent: #3d7eff;
+
+    /* Logo & nav link colors */
+    --logo-color:       #ffffff;
+    --logo-hover:       #4d8dff;
+    --nav-link-color:   #888888;
+    --nav-year-color:   #777777;
+
+    /* Watermark / decorative */
+    --watermark-color: rgba(255, 255, 255, 0.045);
+
+    /* Footer */
+    --footer-bg:         #0a0b0e;
+    --footer-border-top: rgba(255, 255, 255, 0.08);
+
+    /* Skill badge */
+    --badge-bg:          rgba(37, 99, 235, 0.15);
+    --badge-border:      rgba(59, 130, 246, 0.3);
+    --badge-text:        #f1f5f9;
+
+    /* Project row */
+    --project-row-border: rgba(255, 255, 255, 0.15);
+    --project-row-hover:  rgba(255, 255, 255, 0.025);
+
+    /* Scroll velocity marquee */
+    --marquee-color: #3b82f6;
+
+    /* Topbar / section meta */
+    --topbar-color: #60a5fa;
+    --topbar-meta:  rgba(255, 255, 255, 0.4);
+
+    /* Card icons */
+    --icon-bg:     rgba(255, 255, 255, 0.04);
+    --icon-border: rgba(255, 255, 255, 0.09);
+
+    /* Theme toggle button */
+    --toggle-bg:     rgba(18, 20, 26, 0.9);
+    --toggle-border: rgba(255, 255, 255, 0.12);
+    --toggle-icon:   #93c5fd;
+
+    /* Transition for theme switch */
+    --theme-transition: background-color 0.35s ease, color 0.35s ease,
+                        border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+[data-theme="light"] {
+    /* Core backgrounds */
+    --bg-base:       #f8fafc;
+    --bg-site:       #f1f5f9;
+    --bg-section:    #ffffff;
+    --bg-card:       rgba(255, 255, 255, 0.85);
+    --bg-card-solid: #ffffff;
+    --bg-nav:        rgba(248, 250, 252, 0.92);
+    --bg-input:      rgba(255, 255, 255, 0.85);
+
+    /* Text */
+    --text-primary:   #0f172a;
+    --text-secondary: #334155;
+    --text-muted:     #64748b;
+    --text-dim:       #94a3b8;
+    --text-faint:     #94a3b8;
+
+    /* Borders */
+    --border-subtle:  rgba(15, 23, 42, 0.08);
+    --border-medium:  rgba(15, 23, 42, 0.12);
+    --border-strong:  rgba(15, 23, 42, 0.18);
+
+    /* Navy Blue accent for light mode */
+    --blue-500:  #1e40af;   /* navy primary */
+    --blue-600:  #1e3a8a;   /* navy dark */
+    --blue-700:  #1e2e6e;   /* navy deeper */
+    --blue-400:  #2563eb;   /* navy medium */
+    --blue-300:  #3b82f6;   /* navy light */
+    --blue-glow: rgba(30, 64, 175, 0.2);
+
+    /* Section gradient (subtle navy tint) */
+    --section-gradient: radial-gradient(circle at 80% 20%, rgba(30, 64, 175, 0.05), transparent 35%);
+    --home-gradient:
+        radial-gradient(circle at 35% 50%, rgba(30, 64, 175, 0.06) 0%, transparent 60%),
+        radial-gradient(circle at 85% 20%, rgba(30, 58, 138, 0.04) 0%, transparent 50%),
+        #f8fafc;
+
+    --nav-accent: #1e40af;
+
+    --logo-color:     #0f172a;
+    --logo-hover:     #1e3a8a;
+    --nav-link-color: #475569;
+    --nav-year-color: #94a3b8;
+
+    --watermark-color: rgba(15, 23, 42, 0.04);
+
+    --footer-bg:         #f1f5f9;
+    --footer-border-top: rgba(15, 23, 42, 0.08);
+
+    --badge-bg:     rgba(30, 64, 175, 0.07);
+    --badge-border: rgba(30, 64, 175, 0.2);
+    --badge-text:   #1e3a8a;
+
+    --project-row-border: rgba(15, 23, 42, 0.12);
+    --project-row-hover:  rgba(30, 64, 175, 0.04);
+
+    --marquee-color: #1e3a8a;
+
+    --topbar-color: #1e40af;
+    --topbar-meta:  rgba(15, 23, 42, 0.4);
+
+    --icon-bg:     rgba(15, 23, 42, 0.04);
+    --icon-border: rgba(15, 23, 42, 0.1);
+
+    --toggle-bg:     rgba(255, 255, 255, 0.95);
+    --toggle-border: rgba(15, 23, 42, 0.12);
+    --toggle-icon:   #1e3a8a;
+}
+
+/* =====================================================
    GLOBAL RESET
 ===================================================== */
 
@@ -8,19 +168,34 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Smooth theme transitions on all elements */
+    transition:
+        background-color 0.35s ease,
+        border-color 0.35s ease,
+        color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+/* Exclude transitions that would conflict with animations */
+canvas,
+.drift-wall__track,
+.drift-wall__plane,
+.scroller,
+.launching-opening-overlay,
+.launching-content-container,
+[style*="transform"] {
+    transition: none;
 }
 
 html {
     scroll-behavior: smooth;
-    /* Prevent layout thrashing on scroll */
     overflow-y: scroll;
 }
 
 body {
     font-family: "Poppins", sans-serif;
-    background: #111111;
-    color: #ffffff;
-    /* Ensure the entire page is composited on the GPU */
+    background: var(--bg-site);
+    color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeSpeed;
@@ -28,21 +203,8 @@ body {
 
 /* =====================================================
    GLOBAL GPU ACCELERATION FOR ANIMATED ELEMENTS
-   Promote elements that animate to their own
-   compositor layers so the browser doesn't have
-   to repaint surrounding content every frame.
 ===================================================== */
 
-/* Any element running a CSS keyframe animation or
-   JS-driven transform gets its own GPU layer.      */
-[style*="transform"],
-[style*="opacity"],
-canvas {
-    /* will-change: auto is intentionally left to
-       child elements so we don't promote everything */
-}
-
-/* Scrolling velocity marquee rows */
 .parallax,
 .scroller {
     will-change: transform;
@@ -51,17 +213,13 @@ canvas {
     -webkit-backface-visibility: hidden;
 }
 
-/* DriftWall columns already have will-change; ensure
-   the tile transitions use only compositor props.  */
 .drift-wall__inner,
 .drift-wall__tile img,
 .drift-wall__overlay {
-    /* transition only compositor-safe properties   */
     transform: translateZ(0);
     backface-visibility: hidden;
 }
 
-/* Music player vinyl + eq bars */
 .vinyl-disc,
 .equalizer-bars .bar {
     will-change: transform;
@@ -69,13 +227,11 @@ canvas {
     backface-visibility: hidden;
 }
 
-/* Hero 3D model canvas wrapper */
 .hero-3d-container canvas {
     display: block;
     image-rendering: auto;
 }
 
-/* Launching page overlay */
 .launching-opening-overlay,
 .launching-content-container {
     transform: translate3d(0, 0, 0);
@@ -83,13 +239,14 @@ canvas {
     -webkit-backface-visibility: hidden;
 }
 
-/* Navbar blur — keep on its own layer */
 .sticky-navbar {
     transform: translateZ(0);
     backface-visibility: hidden;
 }
 
-
+/* =====================================================
+   LINKS & BUTTONS
+===================================================== */
 
 a {
     color: inherit;
@@ -107,7 +264,7 @@ a {
 
 .site {
     min-height: 100vh;
-    background: #111111;
+    background: var(--bg-site);
 }
 
 .main-content {
@@ -126,12 +283,8 @@ a {
 .page-section {
     min-height: 85vh;
     padding: 60px 6vw 100px;
-    background:
-        radial-gradient(circle at 80% 20%,
-            rgba(37, 99, 235, 0.12),
-            transparent 35%),
-        #0a0b0e;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--section-gradient), var(--bg-section);
+    border-top: 1px solid var(--border-subtle);
     position: relative;
 }
 
@@ -139,8 +292,8 @@ a {
     display: flex;
     justify-content: space-between;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: #71717a;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-muted);
     font-family: "Space Mono", monospace;
     font-size: 11px;
     letter-spacing: 2px;
@@ -156,7 +309,7 @@ a {
 .blue-label {
     display: inline-block;
     padding: 5px 12px;
-    background: #2563eb;
+    background: var(--blue-600);
     color: #ffffff;
     font-family: "Space Mono", monospace;
     font-size: 10px;
@@ -172,20 +325,19 @@ a {
     font-size: clamp(50px, 8vw, 100px);
     line-height: 0.95;
     letter-spacing: -1.5px;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .page-header p {
     margin-top: 20px;
     max-width: 600px;
-    color: #a1a1aa;
+    color: var(--text-secondary);
     font-size: 14.5px;
     line-height: 1.8;
 }
 
-/* Shared dot accent */
 .act-dot {
-    color: #2563eb;
+    color: var(--blue-600);
 }
 
 /* =====================================================

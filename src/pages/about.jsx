@@ -1,5 +1,4 @@
 import React from "react";
-import ScrollVelocity from "../components/ScrollVelocity";
 import "./about.css";
 
 function About() {
@@ -73,14 +72,6 @@ function About() {
                     </div>
                 </div>
             </div>
-            <ScrollVelocity
-              texts={['About Me', 'Keep Scrolling']} 
-              velocity={80}
-              className="custom-scroll-text"
-              numCopies={8}
-              damping={50}
-              stiffness={200}
-            />
         </section>
     );
 }

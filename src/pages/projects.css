@@ -13,23 +13,23 @@
     gap: 30px;
     align-items: center;
     padding: 35px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    transition: 0.3s ease;
+    border-bottom: 1px solid var(--project-row-border);
+    transition: padding 0.3s ease, background 0.3s ease;
 }
 
 .project-row:hover {
     padding-left: 15px;
-    background: rgba(255, 255, 255, 0.025);
+    background: var(--project-row-hover);
 }
 
 .project-row-number {
-    color: #3d7eff;
+    color: var(--blue-500);
     font-family: "Anton", sans-serif;
     font-size: 30px;
 }
 
 .project-category {
-    color: #777777;
+    color: var(--text-dim);
     font-size: 9px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -40,13 +40,13 @@
     font-family: "Anton", sans-serif;
     font-size: 45px;
     letter-spacing: 1px;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .project-row-main p {
     margin-top: 8px;
     max-width: 600px;
-    color: #888888;
+    color: var(--text-dim);
     font-size: 13px;
     line-height: 1.7;
 }
@@ -61,21 +61,27 @@
 .project-tech-tag {
     font-family: "Space Mono", monospace;
     font-size: 9.5px;
-    color: #93c5fd;
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--blue-300);
+    background: var(--border-subtle);
     padding: 3px 8px;
     border-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-subtle);
+}
+
+[data-theme="light"] .project-tech-tag {
+    color: var(--blue-600);
+    background: rgba(37, 99, 235, 0.06);
+    border-color: rgba(37, 99, 235, 0.15);
 }
 
 .project-arrow {
     font-size: 30px;
-    color: #ffffff;
-    transition: 0.3s ease;
+    color: var(--text-primary);
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .project-row:hover .project-arrow {
-    color: #3d7eff;
+    color: var(--blue-500);
     transform: translate(5px, -5px);
 }
 

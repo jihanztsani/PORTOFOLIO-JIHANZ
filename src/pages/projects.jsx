@@ -1,5 +1,4 @@
 import React from "react";
-import ScrollVelocity from "../components/ScrollVelocity";
 import "./projects.css";
 
 const projects = [
@@ -96,14 +95,6 @@ function Projects() {
                     </article>
                 ))}
             </div>
-            <ScrollVelocity
-              texts={['Featured Projects', 'My Work']} 
-              velocity={80}
-              className="custom-scroll-text"
-              numCopies={8}
-              damping={50}
-              stiffness={200}
-            />
         </section>
     );
 }

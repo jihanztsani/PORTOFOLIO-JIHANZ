@@ -25,7 +25,7 @@
 .act-compact-title {
     font-family: "Anton", sans-serif;
     font-size: clamp(42px, 6vw, 80px);
-    color: #ffffff;
+    color: var(--text-primary);
     line-height: 0.95;
     letter-spacing: -1px;
     margin-top: 14px;
@@ -34,7 +34,7 @@
 .act-compact-sub {
     margin-top: 12px;
     font-size: 12px;
-    color: #71717a;
+    color: var(--text-muted);
     letter-spacing: 1.5px;
     font-family: "Space Mono", monospace;
 }
@@ -52,10 +52,9 @@
     align-items: center;
     gap: 18px;
     padding: 14px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    background: rgba(18, 20, 26, 0.5);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
     border-radius: 6px;
-    /* Only transition compositor-safe props to avoid layout/paint triggers */
     transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
                 opacity 0.25s ease;
     will-change: transform;
@@ -84,7 +83,7 @@
 .act-pill-period {
     font-family: "Space Mono", monospace;
     font-size: 10px;
-    color: #3b82f6;
+    color: var(--blue-500);
     letter-spacing: 1px;
     flex-shrink: 0;
     min-width: 110px;
@@ -94,7 +93,7 @@
     font-family: "Poppins", sans-serif;
     font-size: 13px;
     font-weight: 600;
-    color: #e4e4e7;
+    color: var(--text-primary);
     letter-spacing: 0.3px;
 }
 
@@ -105,9 +104,9 @@
 .doc-section {
     background:
         radial-gradient(circle at 20% 80%,
-            rgba(37, 99, 235, 0.1),
+            rgba(37, 99, 235, 0.08),
             transparent 40%),
-        #0a0b0e;
+        var(--bg-section);
 }
 
 .doc-driftwall-container {
@@ -121,9 +120,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.08) 0%, #08090c 70%);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.06) 0%, var(--bg-base) 70%);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), inset 0 0 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-subtle);
+}
+
+[data-theme="light"] .doc-driftwall-container {
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.1), inset 0 0 20px rgba(15, 23, 42, 0.04);
 }
 
 .doc-header-row {
@@ -139,7 +142,7 @@
 .doc-main-title {
     font-family: "Anton", sans-serif;
     font-size: clamp(50px, 7vw, 90px);
-    color: #ffffff;
+    color: var(--text-primary);
     line-height: 0.95;
     letter-spacing: -1px;
     margin-top: 14px;
@@ -153,7 +156,7 @@
     display: block;
     font-family: "Anton", sans-serif;
     font-size: 56px;
-    color: #2563eb;
+    color: var(--blue-600);
     line-height: 1;
 }
 
@@ -161,7 +164,7 @@
     font-family: "Space Mono", monospace;
     font-size: 10px;
     letter-spacing: 2px;
-    color: #71717a;
+    color: var(--text-muted);
 }
 
 /* ── Lightbox ── */
@@ -178,12 +181,8 @@
 }
 
 @keyframes lbFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 .doc-lb-img {
@@ -196,14 +195,8 @@
 }
 
 @keyframes lbImgIn {
-    from {
-        transform: scale(0.92);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+    from { transform: scale(0.92); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
 }
 
 .doc-lb-close,
@@ -249,18 +242,13 @@
     justify-content: center;
 }
 
-.doc-lb-prev {
-    left: 20px;
-}
-
-.doc-lb-next {
-    right: 20px;
-}
+.doc-lb-prev { left: 20px; }
+.doc-lb-next { right: 20px; }
 
 .doc-lb-prev:hover,
 .doc-lb-next:hover {
-    background: #2563eb;
-    border-color: #2563eb;
+    background: var(--blue-600);
+    border-color: var(--blue-600);
     transform: translateY(-50%) scale(1.1);
 }
 
@@ -269,9 +257,7 @@
 ===================================================== */
 
 @media (max-width: 1000px) {
-    .act-compact-body {
-        gap: 30px;
-    }
+    .act-compact-body { gap: 30px; }
 }
 
 @media (max-width: 700px) {
@@ -285,15 +271,7 @@
         align-items: flex-start;
     }
 
-    .doc-header-meta {
-        text-align: left;
-    }
-
-    .doc-lb-prev {
-        left: 8px;
-    }
-
-    .doc-lb-next {
-        right: 8px;
-    }
+    .doc-header-meta { text-align: left; }
+    .doc-lb-prev { left: 8px; }
+    .doc-lb-next { right: 8px; }
 }

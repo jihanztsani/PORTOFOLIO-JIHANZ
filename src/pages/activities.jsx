@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import DriftWall from "../components/DriftWall";
-import ScrollVelocity from "../components/ScrollVelocity";
 import "./activities.css";
 
 // ── Import all documentation images ──────────────────────────────────────────

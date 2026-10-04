@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Hero from "./hero";
+import Aurora from "../components/Aurora";
+import { useTheme } from "../contexts/ThemeContext";
 import "./home.css";
 
 function Home() {
     const [timeString, setTimeString] = useState("");
+    const { theme } = useTheme();
+
+    // Dark mode palette: periwinkle (#7489dd), blue (#3b82f6), deep indigo (#3e24aa) as requested
+    // Light mode palette: deeper navy & sapphire tones for clear contrast against white background
+    const auroraColorStops =
+        theme === "light"
+            ? ["#3b82f6", "#1e40af", "#0a1931"]
+            : ["#7489dd", "#3b82f6", "#3e24aa"];
 
     // Live clock for GMT+7 (Western Indonesia Time / WIB)
     useEffect(() => {
@@ -26,6 +36,17 @@ function Home() {
 
     return (
         <section id="home" className="editorial-home">
+
+            {/* FLOWING AURORA BACKGROUND (ReactBits Aurora) */}
+            <div className="hero-aurora-wrapper">
+                <Aurora
+                    colorStops={auroraColorStops}
+                    blend={0.55}
+                    amplitude={1.1}
+                    speed={0.7}
+                    lightMode={theme === "light"}
+                />
+            </div>
 
             {/* VIGNETTE OVERLAY */}
             <div className="editorial-vignette"></div>

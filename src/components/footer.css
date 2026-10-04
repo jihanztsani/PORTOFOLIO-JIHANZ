@@ -4,11 +4,11 @@
 
 .site-footer {
     position: relative;
-    background-color: #0a0b0e;
-    color: #ffffff;
+    background-color: var(--footer-bg);
+    color: var(--text-primary);
     padding: 70px 6vw 40px;
     overflow: hidden;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--footer-border-top);
     font-family: "Poppins", sans-serif;
     min-height: 85vh;
     display: flex;
@@ -40,7 +40,7 @@
     font-size: clamp(85px, 16vw, 220px);
     font-weight: 900;
     letter-spacing: 8px;
-    color: rgba(255, 255, 255, 0.045);
+    color: var(--watermark-color);
     user-select: none;
     pointer-events: none;
     z-index: 0;
@@ -92,13 +92,13 @@
     font-size: clamp(38px, 4.5vw, 56px);
     font-weight: 800;
     letter-spacing: -1px;
-    color: #ffffff;
+    color: var(--text-primary);
     line-height: 1.1;
     margin-bottom: 16px;
 }
 
 .contact-description {
-    color: #94a3b8;
+    color: var(--text-secondary);
     font-size: 14.5px;
     line-height: 1.7;
     max-width: 440px;
@@ -119,8 +119,8 @@
     gap: 18px;
     padding: 16px 20px;
     border-radius: 14px;
-    background: rgba(18, 20, 26, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
     text-decoration: none;
     color: inherit;
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
@@ -157,9 +157,9 @@
     width: 44px;
     height: 44px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    color: #e2e8f0;
+    background: var(--icon-bg);
+    border: 1px solid var(--icon-border);
+    color: var(--text-secondary);
     flex-shrink: 0;
     transition: color 0.3s ease, border-color 0.3s ease;
 }
@@ -180,12 +180,12 @@
 .card-label {
     font-size: 13.5px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .card-val {
     font-size: 12px;
-    color: #64748b;
+    color: var(--text-faint);
     font-family: "Space Mono", monospace;
 }
 
@@ -224,11 +224,11 @@
 }
 
 .contact-form-card {
-    background: rgba(18, 20, 26, 0.72);
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(14px);
     display: flex;
     flex-direction: column;
@@ -241,19 +241,19 @@
 
 .form-input {
     width: 100%;
-    background: rgba(255, 255, 255, 0.035);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
     border-radius: 12px;
     padding: 16px 20px;
     font-size: 14px;
-    color: #ffffff;
+    color: var(--text-primary);
     font-family: "Poppins", sans-serif;
     outline: none;
     transition: all 0.25s ease;
 }
 
 .form-input::placeholder {
-    color: #64748b;
+    color: var(--text-faint);
 }
 
 .form-input:focus {
@@ -309,11 +309,11 @@
     z-index: 2;
     margin-top: 90px;
     padding-top: 25px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--border-subtle);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #64748b;
+    color: var(--text-faint);
     font-size: 10px;
     font-family: "Space Mono", monospace;
     letter-spacing: 2px;

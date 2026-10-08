@@ -1,111 +1,19 @@
 /* =====================================================
    NAVBAR COMPONENT STYLES
+   Minimalist Floating Menu Integration
 ===================================================== */
 
-.navbar {
-    height: 80px;
-    padding: 0 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #111111;
-    border-bottom: 1px solid var(--border-medium);
-    position: relative;
-    z-index: 100;
-}
-
-.sticky-navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    backdrop-filter: blur(14px);
-    background: var(--bg-nav);
-    border-bottom: 1px solid var(--border-subtle);
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-}
-
-.navbar-logo {
-    font-family: "Anton", sans-serif;
-    font-size: 28px;
-    letter-spacing: 2px;
-    color: var(--logo-color);
-    transition: color 0.3s ease;
-    cursor: pointer;
-}
-
-.navbar-logo:hover {
-    color: var(--logo-hover);
-}
-
-.navbar-links {
-    display: flex;
-    align-items: center;
-    gap: 35px;
-}
-
-.nav-link {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    color: var(--nav-link-color);
-    transition: color 0.3s ease;
-    position: relative;
-    cursor: pointer;
-}
-
-.nav-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 100%;
-    height: 2px;
-    background: var(--nav-accent);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-}
-
-.nav-link:hover,
-.nav-link.active {
-    color: var(--text-primary);
-}
-
-.nav-link.active::after {
-    transform: scaleX(1);
-}
-
-.navbar-year {
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: var(--nav-year-color);
-    font-family: "Space Mono", monospace;
-}
-
-.navbar-right {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-
-/* =====================================================
-   THEME TOGGLE BUTTON
-===================================================== */
-
+/* Theme toggle button inside drawer */
 .theme-toggle-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid var(--toggle-border);
-    background: var(--toggle-bg);
-    color: var(--toggle-icon);
+    background: var(--bg-card, rgba(18, 20, 26, 0.75));
+    border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.15));
+    color: var(--text-primary, #ffffff);
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease,
                 border-color 0.25s ease, background 0.35s ease;
@@ -113,52 +21,20 @@
     outline: none;
 }
 
+[data-theme="light"] .theme-toggle-btn {
+    background: #f8fafc;
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #0f172a;
+}
+
 .theme-toggle-btn:hover {
     transform: scale(1.1) rotate(15deg);
-    box-shadow: 0 0 14px var(--blue-glow);
-    border-color: var(--blue-400);
+    box-shadow: 0 0 14px var(--blue-glow, rgba(59, 130, 246, 0.4));
+    border-color: var(--blue-400, #60a5fa);
 }
 
 .theme-toggle-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
     transition: transform 0.4s ease;
-}
-
-/* =====================================================
-   RESPONSIVE NAVBAR
-===================================================== */
-
-@media (max-width: 1000px) {
-    .navbar-links {
-        gap: 20px;
-    }
-}
-
-@media (max-width: 700px) {
-    .navbar {
-        height: auto;
-        min-height: 70px;
-        padding: 20px;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .navbar-links {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        gap: 15px;
-        overflow-x: auto;
-        padding-bottom: 5px;
-    }
-
-    .nav-link {
-        font-size: 9px;
-        white-space: nowrap;
-    }
-
-    .navbar-year {
-        margin-left: auto;
-    }
 }

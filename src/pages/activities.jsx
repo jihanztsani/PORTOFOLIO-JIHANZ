@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import DriftWall from "../components/DriftWall";
 import "./activities.css";
 
@@ -178,7 +179,7 @@ function Activities() {
             {/* ── Activities Section (compact) ── */}
             <section id="activities" className="page-section act-compact-section">
                 <div className="section-topbar">
-                    <span>PORTFOLIO</span>
+                    <Link to="/" className="topbar-home-link">← BERANDA</Link>
                     <span>02 — ACTIVITIES</span>
                     <span>2026</span>
                 </div>
@@ -206,7 +207,7 @@ function Activities() {
             {/* ── Documentation Section ── */}
             <section id="documentation" className="page-section doc-section">
                 <div className="section-topbar">
-                    <span>PORTFOLIO</span>
+                    <Link to="/" className="topbar-home-link">← BERANDA</Link>
                     <span>02.5 — DOCUMENTATION</span>
                     <span>2026</span>
                 </div>

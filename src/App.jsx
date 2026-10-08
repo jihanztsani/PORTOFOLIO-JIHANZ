@@ -1,53 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
     BrowserRouter,
     Routes,
     Route,
-    useLocation
+    Navigate
 } from "react-router-dom";
 
 import MainLayout from "./layouts/mainlayout";
 import LaunchingPage from "./components/LaunchingPage";
+import CustomCursor from "./components/CustomCursor";
+import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/home";
 import About from "./pages/about";
 import Activities from "./pages/activities";
 import Projects from "./pages/projects";
 import Certificates from "./pages/certificates";
+import HomePreviews from "./components/HomePreviews";
 
-// Main continuous single-page portfolio layout in the exact requested order:
-// 1. Home -> 2. About -> 3. Activities -> 4. Projects -> 5. Certificates
-function SinglePagePortfolio() {
-    const location = useLocation();
-
-    // Auto-scroll to section if path or hash is present on load/route change
-    useEffect(() => {
-        const path = location.pathname.replace("/", "");
-        const targetId = location.hash ? location.hash.replace("#", "") : path;
-
-        if (targetId && ["about", "activities", "projects", "certificates", "home", "contact"].includes(targetId)) {
-            setTimeout(() => {
-                const el = document.getElementById(targetId);
-                if (el) {
-                    const navbarHeight = 80;
-                    const elementPosition = el.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth",
-                    });
-                }
-            }, 100);
-        }
-    }, [location]);
-
+// Homepage: Only renders Hero, About, Sections Highlights/Previews, and Contact Us (via MainLayout Footer)
+function HomePage() {
     return (
-        <div className="single-page-wrapper">
+        <div className="home-page-wrapper">
             <Home />
             <About />
-            <Activities />
-            <Projects />
-            <Certificates />
+            <HomePreviews />
         </div>
     );
 }
@@ -57,16 +34,22 @@ function App() {
 
     return (
         <BrowserRouter>
+            <ScrollToTop />
+            <CustomCursor />
             {!isLaunched && <LaunchingPage onFinish={() => setIsLaunched(true)} />}
             <MainLayout>
                 <Routes>
-                    <Route path="/" element={<SinglePagePortfolio />} />
-                    <Route path="/about" element={<SinglePagePortfolio />} />
-                    <Route path="/activities" element={<SinglePagePortfolio />} />
-                    <Route path="/projects" element={<SinglePagePortfolio />} />
-                    <Route path="/certificates" element={<SinglePagePortfolio />} />
-                    <Route path="/contact" element={<SinglePagePortfolio />} />
-                    <Route path="*" element={<SinglePagePortfolio />} />
+                    {/* Halaman Utama: Hero + About + Ringkasan Bagian Lainnya + Contact Us */}
+                    <Route path="/" element={<HomePage />} />
+
+                    {/* Halaman-halaman Terpisah */}
+                    <Route path="/about" element={<About />} />
+                    <Route path="/activities" element={<Activities />} />
+                    <Route path="/projects" element={<Projects />} />
+                    <Route path="/certificates" element={<Certificates />} />
+
+                    {/* Fallback */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </MainLayout>
         </BrowserRouter>

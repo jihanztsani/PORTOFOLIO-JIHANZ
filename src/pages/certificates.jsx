@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./certificate.css";
 
 const certificatesList = [
@@ -41,7 +42,7 @@ function Certificates() {
         <section id="certificates" className="page-section">
 
             <div className="section-topbar">
-                <span>PORTFOLIO</span>
+                <Link to="/" className="topbar-home-link">← BERANDA</Link>
                 <span>04 — CERTIFICATES &amp; ACHIEVEMENTS</span>
                 <span>2026</span>
             </div>

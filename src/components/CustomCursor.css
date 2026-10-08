@@ -1,0 +1,140 @@
+/* ==========================================================================
+   MINIMALIST & FUTURISTIC SINGLE-DOT CUSTOM CURSOR
+   1 Titik Tunggal (Single Dot) — Zero Latency & Electric Glow
+   ========================================================================== */
+
+/* Hide default cursor on desktop devices with pointer */
+@media (hover: hover) and (pointer: fine) {
+    *,
+    *::before,
+    *::after {
+        cursor: none !important;
+    }
+}
+
+/* Hide custom cursor completely on touch devices (phones, tablets) */
+@media (hover: none) and (pointer: coarse) {
+    .custom-cursor-container {
+        display: none !important;
+    }
+}
+
+.custom-cursor-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 999999;
+    user-select: none;
+    overflow: hidden;
+    transition: opacity 0.25s ease;
+}
+
+.custom-cursor-container.is-hidden {
+    opacity: 0;
+}
+
+.custom-cursor-container.is-visible {
+    opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   THE SINGLE FUTURISTIC DOT
+   -------------------------------------------------------------------------- */
+.single-cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    margin-left: -4px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow:
+        0 0 8px #60a5fa,
+        0 0 16px rgba(59, 130, 246, 0.8),
+        0 0 24px rgba(37, 99, 235, 0.5);
+    pointer-events: none;
+    will-change: transform;
+    transition:
+        width 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        height 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        margin 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        background-color 0.2s ease,
+        box-shadow 0.25s ease,
+        transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   INTERACTIVE STATES (1 DOT ONLY)
+   -------------------------------------------------------------------------- */
+
+/* 1. HOVER ON CLICKABLES (Links, Buttons, Cards) */
+.custom-cursor-container.state-hover .single-cursor-dot {
+    width: 16px;
+    height: 16px;
+    margin-top: -8px;
+    margin-left: -8px;
+    background: #93c5fd;
+    box-shadow:
+        0 0 12px #60a5fa,
+        0 0 25px rgba(59, 130, 246, 0.95),
+        0 0 35px rgba(37, 99, 235, 0.7);
+}
+
+/* 2. DRAG / 3D CANVAS STATE */
+.custom-cursor-container.state-drag .single-cursor-dot {
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    margin-left: -6px;
+    background: #60a5fa;
+    box-shadow:
+        0 0 10px #60a5fa,
+        0 0 20px rgba(59, 130, 246, 0.85);
+}
+
+/* 3. TEXT INPUT STATE (Typing HUD Caret Dot) */
+.custom-cursor-container.state-text .single-cursor-dot {
+    width: 3px;
+    height: 18px;
+    margin-top: -9px;
+    margin-left: -1.5px;
+    border-radius: 2px;
+    background: #60a5fa;
+    box-shadow: 0 0 8px #60a5fa;
+}
+
+/* 4. MOUSE DOWN (CLICKING) */
+.custom-cursor-container.is-down .single-cursor-dot {
+    transform: scale(0.65) !important;
+    background: #3b82f6;
+    box-shadow:
+        0 0 10px #3b82f6,
+        0 0 20px rgba(37, 99, 235, 0.9);
+}
+
+/* --------------------------------------------------------------------------
+   LIGHT MODE ADAPTATION
+   -------------------------------------------------------------------------- */
+[data-theme="light"] .single-cursor-dot {
+    background: #1e40af;
+    box-shadow:
+        0 0 8px rgba(37, 99, 235, 0.7),
+        0 0 16px rgba(30, 64, 175, 0.5);
+}
+
+[data-theme="light"] .custom-cursor-container.state-hover .single-cursor-dot {
+    background: #2563eb;
+    box-shadow:
+        0 0 12px rgba(37, 99, 235, 0.85),
+        0 0 22px rgba(30, 64, 175, 0.6);
+}
+
+[data-theme="light"] .custom-cursor-container.state-text .single-cursor-dot {
+    background: #1e40af;
+    box-shadow: 0 0 6px rgba(30, 64, 175, 0.6);
+}

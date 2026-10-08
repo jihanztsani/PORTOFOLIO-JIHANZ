@@ -5,7 +5,7 @@ import "./MusicPlayer.css";
 const START_OFFSET_SECONDS = 18;
 
 // Compact WakeSlider (React Bits wake physics)
-function WakeSlider({ value = 50, onChange, bars = 18 }) {
+function WakeSlider({ value = 50, onChange, bars = 12 }) {
     const pct = Math.min(100, Math.max(0, value));
     const rest = 7 / 26;
     const barEls = useRef([]);
@@ -70,7 +70,7 @@ function WakeSlider({ value = 50, onChange, bars = 18 }) {
     return (
         <div
             ref={trackRef}
-            className="wake-slider-track"
+            className="nav-wake-slider-track"
             onPointerDown={(e) => {
                 pointerId.current = e.pointerId;
                 try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
@@ -91,11 +91,11 @@ function WakeSlider({ value = 50, onChange, bars = 18 }) {
                 <span
                     key={i}
                     ref={(el) => { barEls.current[i] = el; }}
-                    className="wake-bar"
+                    className="nav-wake-bar"
                 >
                     <span
                         ref={(el) => { crestEls.current[i] = el; }}
-                        className="wake-crest"
+                        className="nav-wake-crest"
                     />
                 </span>
             ))}
@@ -103,14 +103,12 @@ function WakeSlider({ value = 50, onChange, bars = 18 }) {
     );
 }
 
-function MusicPlayer() {
+function MusicPlayer({ className = "" }) {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [volume, setVolume] = useState(0.5);
     const [prevVolume, setPrevVolume] = useState(0.5);
-    const [isExpanded, setIsExpanded] = useState(true);
-    const [hasInteracted, setHasInteracted] = useState(false);
     const [showAutoplayPrompt, setShowAutoplayPrompt] = useState(false);
 
     // Set initial start time at 18 seconds
@@ -161,12 +159,11 @@ function MusicPlayer() {
                     .then(() => {
                         setIsPlaying(true);
                         setIsMuted(false);
-                        setHasInteracted(true);
                         setShowAutoplayPrompt(false);
                     })
                     .catch(() => {
                         // If browser blocks unmuted audio on first load:
-                        // 1. Immediately play muted so the track starts playing right away at 18s!
+                        // 1. Immediately play muted so track starts playing right away at 18s!
                         audio.muted = true;
                         setIsMuted(true);
                         audio.play()
@@ -175,7 +172,7 @@ function MusicPlayer() {
                             })
                             .catch((e) => console.log(e));
 
-                        // 2. Unmute on any subtle movement (mousemove, scroll, touch) without requiring a click!
+                        // 2. Unmute on any subtle movement without requiring an intrusive click!
                         const events = ["mousemove", "pointermove", "scroll", "wheel", "touchstart", "pointerdown", "keydown"];
                         events.forEach((evt) => {
                             window.addEventListener(evt, instantUnmute, { once: true, passive: true });
@@ -214,7 +211,6 @@ function MusicPlayer() {
             audio.play()
                 .then(() => {
                     setIsPlaying(true);
-                    setHasInteracted(true);
                     setShowAutoplayPrompt(false);
                 })
                 .catch((err) => {
@@ -261,7 +257,7 @@ function MusicPlayer() {
     };
 
     return (
-        <aside aria-label="Music Player" className="music-player-container">
+        <div className={`navbar-music-player ${isPlaying ? "is-playing" : ""} ${className}`}>
             {/* HTML5 Audio Element configured for Timeless by The Weeknd */}
             <audio
                 ref={audioRef}
@@ -278,19 +274,19 @@ function MusicPlayer() {
                 Your browser does not support audio element.
             </audio>
 
-            {/* Subtle Autoplay Prompt Toast (if browser blocked immediate unmuted play) */}
+            {/* Subtle dropdown prompt if browser blocked autoplay */}
             {showAutoplayPrompt && !isPlaying && (
                 <div
-                    className="music-prompt-toast"
+                    className="nav-music-prompt-toast"
                     onClick={togglePlay}
-                    title="Klik untuk memutar Timeless (Mulai detik 0:18)"
+                    title="Klik untuk memutar Timeless"
                 >
-                    <span className="toast-pulse-dot"></span>
-                    <span className="toast-text">
-                        🎵 Klik di mana saja untuk memutar <strong>Timeless - The Weeknd</strong>
+                    <span className="nav-prompt-dot"></span>
+                    <span className="nav-prompt-text">
+                        🎵 Putar <strong>Timeless</strong>
                     </span>
                     <button
-                        className="toast-close-btn"
+                        className="nav-prompt-close"
                         onClick={(e) => {
                             e.stopPropagation();
                             setShowAutoplayPrompt(false);
@@ -302,163 +298,102 @@ function MusicPlayer() {
                 </div>
             )}
 
-            {/* Main Floating Widget */}
-            <div
-                className={`music-player-card ${isExpanded ? "expanded" : "collapsed"} ${isPlaying ? "is-playing" : ""}`}
-                onClick={!isExpanded ? () => setIsExpanded(true) : undefined}
+            {/* Spinning Mini Vinyl Disc */}
+            <button
+                type="button"
+                className="nav-vinyl-btn"
+                onClick={togglePlay}
+                title={isPlaying ? "Jeda musik" : "Putar musik (Mulai detik 0:18)"}
+                aria-label={isPlaying ? "Pause music" : "Play music"}
             >
-                {/* Spinning Vinyl Disc */}
-                <div
-                    className="vinyl-wrapper"
-                    onClick={togglePlay}
-                    title={isPlaying ? "Jeda musik" : "Putar musik (Mulai detik 0:18)"}
-                >
-                    <div className={`vinyl-disc ${isPlaying ? "spinning" : ""}`}>
-                        <div className="vinyl-groove"></div>
-                        <div className="vinyl-groove groove-inner"></div>
-                        <div className="vinyl-center">
-                            <span className="vinyl-star">★</span>
-                        </div>
-                    </div>
-
-                    {/* Overlay Play/Pause Icon on Hover */}
-                    <div className="vinyl-play-overlay">
-                        {isPlaying ? (
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <rect x="6" y="4" width="4" height="16" rx="1" />
-                                <rect x="14" y="4" width="4" height="16" rx="1" />
-                            </svg>
-                        ) : (
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
-                        )}
+                <div className={`nav-vinyl-disc ${isPlaying ? "spinning" : ""}`}>
+                    <div className="nav-vinyl-groove"></div>
+                    <div className="nav-vinyl-center">
+                        <span className="nav-vinyl-dot"></span>
                     </div>
                 </div>
+            </button>
 
-                {/* Track Details & Visualizer (Visible in Expanded mode) */}
-                {isExpanded && (
-                    <div className="music-info-group">
-                        <div className="track-meta">
-                            <div className="track-title-row">
-                                <span className="track-title">Timeless</span>
-                                {/* Equalizer Waves */}
-                                <div className={`equalizer-bars ${isPlaying ? "active" : ""}`}>
-                                    <span className="bar bar-1"></span>
-                                    <span className="bar bar-2"></span>
-                                    <span className="bar bar-3"></span>
-                                    <span className="bar bar-4"></span>
-                                </div>
-                            </div>
-                            <span className="track-artist">The Weeknd, Playboi Carti</span>
-                        </div>
-
-                        {/* Interactive Controls Row */}
-                        <div className="music-controls-row">
-                            {/* Play / Pause Button */}
-                            <button
-                                type="button"
-                                className="control-btn play-btn"
-                                onClick={togglePlay}
-                                aria-label={isPlaying ? "Pause music" : "Play music"}
-                                title={isPlaying ? "Pause" : "Play"}
-                            >
-                                {isPlaying ? (
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                                        <rect x="6" y="4" width="4" height="16" rx="1" />
-                                        <rect x="14" y="4" width="4" height="16" rx="1" />
-                                    </svg>
-                                ) : (
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                                        <polygon points="5 3 19 12 5 21 5 3" />
-                                    </svg>
-                                )}
-                            </button>
-
-                            {/* Volume & Mute Section */}
-                            <div className="volume-wrapper" onClick={(e) => e.stopPropagation()}>
-                                <button
-                                    type="button"
-                                    className="control-btn mute-btn"
-                                    onClick={toggleMute}
-                                    aria-label={isMuted ? "Unmute" : "Mute"}
-                                    title={isMuted ? "Unmute" : "Mute"}
-                                >
-                                    {isMuted || volume === 0 ? (
-                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                                            <line x1="23" y1="9" x2="17" y2="15" />
-                                            <line x1="17" y1="9" x2="23" y2="15" />
-                                        </svg>
-                                    ) : volume < 0.5 ? (
-                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                                        </svg>
-                                    ) : (
-                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-                                        </svg>
-                                    )}
-                                </button>
-                                <div
-                                    className="music-wake-slider-container"
-                                    title={`Volume: ${Math.round((isMuted ? 0 : volume) * 100)}%`}
-                                >
-                                    <WakeSlider
-                                        value={isMuted ? 0 : Math.round(volume * 100)}
-                                        onChange={handleVolumeChange}
-                                        bars={18}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Collapse Widget Button */}
-                            <button
-                                type="button"
-                                className="control-btn minimize-btn"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setIsExpanded(false);
-                                }}
-                                aria-label="Minimize player"
-                                title="Kecilkan pemutar musik"
-                            >
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                    <polyline points="4 14 10 14 10 20" />
-                                    <polyline points="20 10 14 10 14 4" />
-                                    <line x1="14" y1="10" x2="21" y2="3" />
-                                    <line x1="3" y1="21" x2="10" y2="14" />
-                                </svg>
-                            </button>
-                        </div>
+            {/* Track Info (Title & Artist) */}
+            <div
+                className="nav-track-info"
+                onClick={togglePlay}
+                title="Timeless - The Weeknd, Playboi Carti"
+            >
+                <div className="nav-track-title-row">
+                    <span className="nav-track-title">Timeless</span>
+                    {/* Animated Equalizer Waves */}
+                    <div className={`nav-equalizer ${isPlaying ? "active" : ""}`}>
+                        <span className="nav-eq-bar eq-1"></span>
+                        <span className="nav-eq-bar eq-2"></span>
+                        <span className="nav-eq-bar eq-3"></span>
+                        <span className="nav-eq-bar eq-4"></span>
                     </div>
-                )}
-
-                {/* Collapsed Mode Expand Button */}
-                {!isExpanded && (
-                    <button
-                        type="button"
-                        className="collapsed-expand-btn"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            setIsExpanded(true);
-                        }}
-                        aria-label="Expand player"
-                        title="Buka pemutar musik"
-                    >
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="15 3 21 3 21 9" />
-                            <polyline points="9 21 3 21 3 15" />
-                            <line x1="21" y1="3" x2="14" y2="10" />
-                            <line x1="3" y1="21" x2="10" y2="14" />
-                        </svg>
-                    </button>
-                )}
+                </div>
+                <span className="nav-track-artist">The Weeknd</span>
             </div>
-        </aside>
+
+            {/* Play / Pause Toggle Button */}
+            <button
+                type="button"
+                className="nav-control-btn nav-play-btn"
+                onClick={togglePlay}
+                aria-label={isPlaying ? "Pause music" : "Play music"}
+                title={isPlaying ? "Pause" : "Play"}
+            >
+                {isPlaying ? (
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16" rx="1" />
+                        <rect x="14" y="4" width="4" height="16" rx="1" />
+                    </svg>
+                ) : (
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                )}
+            </button>
+
+            {/* Volume Control Group (Mute + Interactive Slider) */}
+            <div className="nav-volume-group" onClick={(e) => e.stopPropagation()}>
+                <button
+                    type="button"
+                    className="nav-control-btn nav-mute-btn"
+                    onClick={toggleMute}
+                    aria-label={isMuted ? "Unmute" : "Mute"}
+                    title={isMuted ? "Unmute" : `Mute (${Math.round(volume * 100)}%)`}
+                >
+                    {isMuted || volume === 0 ? (
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                            <line x1="23" y1="9" x2="17" y2="15" />
+                            <line x1="17" y1="9" x2="23" y2="15" />
+                        </svg>
+                    ) : volume < 0.5 ? (
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                        </svg>
+                    ) : (
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                        </svg>
+                    )}
+                </button>
+
+                <div
+                    className="nav-wake-slider-container"
+                    title={`Volume: ${Math.round((isMuted ? 0 : volume) * 100)}%`}
+                >
+                    <WakeSlider
+                        value={isMuted ? 0 : Math.round(volume * 100)}
+                        onChange={handleVolumeChange}
+                        bars={12}
+                    />
+                </div>
+            </div>
+        </div>
     );
 }
 

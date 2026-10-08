@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./projects.css";
 
 const projects = [
@@ -41,7 +42,7 @@ function Projects() {
         <section id="projects" className="page-section">
 
             <div className="section-topbar">
-                <span>PORTFOLIO</span>
+                <Link to="/" className="topbar-home-link">← BERANDA</Link>
                 <span>03 — FEATURED PROJECTS</span>
                 <span>2026</span>
             </div>

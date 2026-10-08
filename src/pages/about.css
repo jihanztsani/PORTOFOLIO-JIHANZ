@@ -80,17 +80,241 @@
 }
 
 /* =====================================================
-   RESPONSIVE ABOUT
+   SIDE-BY-SIDE DUAL TIMELINE (PENDIDIKAN & ORGANISASI)
 ===================================================== */
 
-@media (max-width: 700px) {
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
+.about-dual-timeline-section {
+    margin-top: 60px;
+    padding-top: 50px;
+    border-top: 1px solid var(--border-subtle);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    width: 100%;
+}
 
-    .about-bio-card,
-    .about-skills-card {
-        padding: 25px 20px;
+.dual-timeline-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-timeline-header {
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.col-pill-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(37, 99, 235, 0.16);
+    color: var(--blue-300);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    border-radius: 999px;
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.col-main-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 6px 0;
+    letter-spacing: -0.01em;
+}
+
+.col-sub-text {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Timeline Track */
+.col-timeline-track {
+    position: relative;
+    padding-left: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Continuous vertical guideline */
+.col-timeline-track::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 7px;
+    width: 2px;
+    background: linear-gradient(
+        180deg,
+        rgba(59, 130, 246, 0.7) 0%,
+        rgba(37, 99, 235, 0.4) 100%
+    );
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+}
+
+.col-timeline-item {
+    position: relative;
+}
+
+/* Node Dot */
+.col-item-dot {
+    position: absolute;
+    left: -26px;
+    top: 18px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg-site);
+    border: 2px solid var(--blue-500);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+    z-index: 2;
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.col-item-dot.active-dot {
+    background: var(--blue-500);
+    border-color: #ffffff;
+    box-shadow: 0 0 14px var(--blue-400);
+}
+
+.col-timeline-item:hover .col-item-dot {
+    transform: scale(1.25);
+    background: var(--blue-400);
+}
+
+/* Card */
+.col-item-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 18px 20px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+[data-theme="light"] .col-item-card {
+    background: var(--bg-card-solid);
+    border: 1px solid var(--border-medium);
+}
+
+.col-item-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(96, 165, 250, 0.45);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25), 0 0 14px rgba(37, 99, 235, 0.15);
+}
+
+.current-study-card {
+    border-color: rgba(96, 165, 250, 0.4);
+    background: linear-gradient(145deg, var(--bg-card), rgba(37, 99, 235, 0.08));
+}
+
+[data-theme="light"] .current-study-card {
+    background: linear-gradient(145deg, #ffffff, rgba(37, 99, 235, 0.05));
+}
+
+/* Meta Top Row */
+.col-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.col-meta-year {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue-300);
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(37, 99, 235, 0.14);
+}
+
+.col-meta-year.active-year {
+    background: var(--blue-600);
+    color: #ffffff;
+}
+
+.col-meta-loc {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.col-card-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 3px 0;
+    letter-spacing: -0.01em;
+}
+
+.col-card-subtitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue-400);
+    margin-bottom: 8px;
+}
+
+[data-theme="light"] .col-card-subtitle {
+    color: var(--blue-600);
+}
+
+.col-card-desc {
+    color: var(--text-secondary);
+    font-size: 12.5px;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Compact bullet list for multi-role org cards */
+.col-compact-list {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.col-compact-list li {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    position: relative;
+    padding-left: 14px;
+}
+
+.col-compact-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--blue-400);
+    font-size: 14px;
+    line-height: 1;
+}
+
+.col-compact-list li strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* =====================================================
+   RESPONSIVE DUAL TIMELINE
+===================================================== */
+
+@media (max-width: 900px) {
+    .about-dual-timeline-section {
+        grid-template-columns: 1fr;
+        gap: 40px;
     }
 }

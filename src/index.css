@@ -180,7 +180,6 @@
 canvas,
 .drift-wall__track,
 .drift-wall__plane,
-.scroller,
 .launching-opening-overlay,
 .launching-content-container,
 [style*="transform"] {
@@ -204,14 +203,6 @@ body {
 /* =====================================================
    GLOBAL GPU ACCELERATION FOR ANIMATED ELEMENTS
 ===================================================== */
-
-.parallax,
-.scroller {
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
 
 .drift-wall__inner,
 .drift-wall__tile img,
@@ -298,6 +289,21 @@ a {
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
+}
+
+.topbar-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--blue-400);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.topbar-home-link:hover {
+    color: var(--text-primary);
+    transform: translateX(-3px);
 }
 
 .page-header {

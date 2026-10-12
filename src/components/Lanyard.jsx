@@ -38,6 +38,8 @@ export default function Lanyard({
   cardScale = 2.45
 }) {
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const containerRef = useRef(null);
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -45,12 +47,24 @@ export default function Lanyard({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Completely pause physics and rendering when footer Lanyard is not in viewport
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setInView(entry.isIntersecting);
+    }, { rootMargin: '180px' });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="lanyard-wrapper">
+    <div ref={containerRef} className="lanyard-wrapper">
       <Canvas
         camera={{ position: position, fov: fov }}
-        dpr={[1, isMobile ? 1.5 : 2]}
-        gl={{ alpha: transparent }}
+        dpr={[1, isMobile ? 1 : 1.5]}
+        gl={{ alpha: transparent, powerPreference: 'high-performance' }}
+        frameloop={inView ? 'always' : 'never'}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
         <ambientLight intensity={Math.PI} />
@@ -212,6 +226,7 @@ function Band({
   }, [hovered, dragged]);
 
   useFrame((state, delta) => {
+    const d = Math.min(delta, 0.033);
     if (dragged) {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
       dir.copy(vec).sub(state.camera.position).normalize();
@@ -225,7 +240,7 @@ function Band({
         const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())));
         ref.current.lerped.lerp(
           ref.current.translation(),
-          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
+          Math.min(1, d * (minSpeed + clampedDistance * (maxSpeed - minSpeed)))
         );
       });
       curve.points[0].copy(j3.current.translation());

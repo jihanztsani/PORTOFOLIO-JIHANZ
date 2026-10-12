@@ -136,10 +136,28 @@ const DriftWall = ({
     [tilt, turn, roll, depth, offsetX]
   );
 
+  const isVisibleRef = useRef(true);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting;
+    }, { rootMargin: '100px' });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const animate = ts => {
+      if (!isVisibleRef.current || document.hidden) {
+        rafRef.current = requestAnimationFrame(animate);
+        lastTsRef.current = ts;
+        return;
+      }
+
       if (lastTsRef.current === null) lastTsRef.current = ts;
-      const dt = Math.min(0.05, Math.max(0, ts - lastTsRef.current) / 1000);
+      const dt = Math.min(0.033, Math.max(0, ts - lastTsRef.current) / 1000);
       lastTsRef.current = ts;
 
       const maxTilt = parallax * 6;
@@ -211,14 +229,6 @@ const DriftWall = ({
           y: (e.clientY - rect.top) / rect.height - 0.5
         };
       }
-      const hit = document.elementFromPoint(e.clientX, e.clientY);
-      const tile = hit && hit.closest ? hit.closest('[data-tile-id]') : null;
-      if (!tile) return;
-      const id = tile.dataset.tileId;
-      if (id === activeIdRef.current) return;
-      activeIdRef.current = id;
-      hoveredColRef.current = Number(tile.dataset.col);
-      setActiveId(id);
     },
     [parallax, reduced]
   );
@@ -257,6 +267,8 @@ const DriftWall = ({
       className: `drift-wall__tile${activeId === id ? ' is-active' : ''}`,
       'data-tile-id': id,
       'data-col': colIndex,
+      onMouseEnter: () => { hoveredColRef.current = colIndex; },
+      onMouseLeave: () => { if (hoveredColRef.current === colIndex) hoveredColRef.current = -1; },
       onFocus: () => activate(id, colIndex),
       onBlur: release
     };

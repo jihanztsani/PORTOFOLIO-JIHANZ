@@ -24,19 +24,19 @@ function ModelMesh({ dragRef, isDraggingRef }) {
     useFrame((_, delta) => {
         if (!groupRef.current) return;
 
-        const d = Math.min(delta, 0.05);
+        const d = Math.min(delta, 0.033);
 
         // Auto-spin: pauses during drag so cursor feels fully in control
         if (!isDraggingRef.current) {
-            spinClockRef.current += d * 0.65;
+            spinClockRef.current += d * 0.5;
         }
 
         // Target = auto-spin + drag offset
         const targetY = spinClockRef.current + dragRef.current.x;
         const targetX = dragRef.current.y;
 
-        // Smooth damp (exp-decay ~100ms)
-        const lerpFactor = 1 - Math.exp(-d * 10);
+        // Smooth damp (exp-decay ~120ms) — silky effortless glide
+        const lerpFactor = 1 - Math.exp(-d * 8);
         currentRotY.current += (targetY - currentRotY.current) * lerpFactor;
         currentRotX.current += (targetX - currentRotX.current) * lerpFactor;
 
@@ -46,7 +46,7 @@ function ModelMesh({ dragRef, isDraggingRef }) {
         // Gentle float only when not dragging
         if (!isDraggingRef.current) {
             floatClockRef.current += d;
-            groupRef.current.position.y = Math.sin(floatClockRef.current * 1.1) * 0.045;
+            groupRef.current.position.y = Math.sin(floatClockRef.current * 0.95) * 0.035;
         }
     });
 
@@ -71,11 +71,23 @@ function Loader() {
 }
 
 export default function Hero3DModel() {
-    // dragRef: accumulated drag offsets (x = Y-axis rotation, y = X-axis tilt)
+    const containerRef   = useRef(null);
     const dragRef        = useRef({ x: 0, y: 0 });
     const isDraggingRef  = useRef(false);
     const lastPosRef     = useRef({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false); // only for CSS cursor
+    const [inView, setInView] = useState(true);
+
+    // Pause ThreeJS render loop when Hero is scrolled out of viewport
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(([entry]) => {
+            setInView(entry.isIntersecting);
+        }, { rootMargin: '150px' });
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
 
     // Global move + up so drag works even outside the canvas
     useEffect(() => {
@@ -87,12 +99,12 @@ export default function Hero3DModel() {
             const dy = clientY - lastPosRef.current.y;
             lastPosRef.current = { x: clientX, y: clientY };
 
-            // Sensitivity: 0.012 rad per pixel
-            dragRef.current.x += dx * 0.012;
-            // Clamp vertical tilt to ±70°
+            // Sensitivity: 0.010 rad per pixel (ultra-smooth)
+            dragRef.current.x += dx * 0.010;
+            // Clamp vertical tilt to ±65°
             dragRef.current.y = Math.max(
-                -1.2,
-                Math.min(1.2, dragRef.current.y + dy * 0.012)
+                -1.15,
+                Math.min(1.15, dragRef.current.y + dy * 0.010)
             );
         };
 
@@ -124,6 +136,7 @@ export default function Hero3DModel() {
 
     return (
         <div
+            ref={containerRef}
             className={`hero-3d-container${isDragging ? " is-dragging" : ""}`}
             onMouseDown={onPointerDown}
             onTouchStart={onPointerDown}
@@ -131,8 +144,9 @@ export default function Hero3DModel() {
             <Canvas
                 camera={{ position: [0, 0.1, 1.8], fov: 42 }}
                 style={{ width: "100%", height: "100%" }}
-                gl={{ antialias: true, alpha: true }}
-                dpr={[1, 2]}
+                gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+                dpr={[1, 1.5]}
+                frameloop={inView ? "always" : "never"}
             >
                 <ambientLight intensity={1.6} />
                 <directionalLight position={[4, 8, 6]} intensity={2.2} />

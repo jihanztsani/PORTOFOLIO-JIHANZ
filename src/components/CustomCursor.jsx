@@ -72,7 +72,9 @@ export default function CustomCursor() {
             aria-hidden="true"
         >
             {/* Exactly 1 Single Minimalist Futuristic Dot */}
-            <div ref={dotRef} className="single-cursor-dot"></div>
+            <div ref={dotRef} className="single-cursor-dot">
+                <span className="cursor-dot-inner" />
+            </div>
         </div>
     );
 }

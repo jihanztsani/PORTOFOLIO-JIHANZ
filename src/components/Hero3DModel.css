@@ -17,6 +17,7 @@
     will-change: transform;
     transform: translateZ(0);
     isolation: isolate;
+    contain: layout paint;
 }
 
 /* Active drag cursor */

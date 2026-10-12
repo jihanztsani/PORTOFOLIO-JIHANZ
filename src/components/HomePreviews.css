@@ -26,7 +26,9 @@
     overflow: hidden;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    isolation: isolate;
+    contain: paint;
+    transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
 }
 
 .preview-block:hover {

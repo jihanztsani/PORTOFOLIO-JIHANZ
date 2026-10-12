@@ -168,7 +168,23 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Smooth theme transitions on all elements */
+}
+
+/* Apply theme transitions only to structural and container elements (avoids universal DOM style reflow lag) */
+body,
+.page-section,
+.editorial-home,
+.preview-block,
+.certificate-card,
+.project-row,
+.act-pill,
+.skill-badge,
+.contact-card,
+.site-footer,
+.editorial-topbar,
+.editorial-bottombar,
+.section-topbar,
+.book-page-indicator {
     transition:
         background-color 0.35s ease,
         border-color 0.35s ease,
@@ -358,5 +374,259 @@ a {
     .page-header {
         padding-top: 40px;
         margin-bottom: 40px;
+    }
+}
+
+/* =====================================================
+   BOOK PAGE FLIP TRANSITION
+   Realistic 3D Editorial Book-Turn Experience
+===================================================== */
+
+/* Outer Perspective Stage */
+.book-transition-stage {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    perspective: 1200px;
+    perspective-origin: 50% 40%;
+    overflow-x: clip;
+    background: transparent;
+    contain: layout;
+}
+
+/* Background desk / book liner underneath turning pages */
+.book-stage-liner {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+    background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+}
+
+[data-theme="light"] .book-stage-liner {
+    opacity: 0.6;
+    background: radial-gradient(circle at 50% 30%, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
+}
+
+/* 3D Flipping Page Sheet */
+.book-page-sheet {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    z-index: 1;
+}
+
+/* Spine Crease (Left edge shadow representing book binding) */
+.book-spine-crease {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 32px;
+    pointer-events: none;
+    z-index: 98;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.28) 0%,
+        rgba(0, 0, 0, 0.12) 12px,
+        rgba(0, 0, 0, 0.03) 24px,
+        transparent 100%
+    );
+    box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] .book-spine-crease {
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.15) 0%,
+        rgba(0, 0, 0, 0.06) 12px,
+        rgba(0, 0, 0, 0.01) 24px,
+        transparent 100%
+    );
+}
+
+/* Stitching line down the spine */
+.book-spine-stitching {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    width: 1px;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.15) 0px,
+        rgba(255, 255, 255, 0.15) 6px,
+        transparent 6px,
+        transparent 12px
+    );
+    opacity: 0.5;
+}
+
+[data-theme="light"] .book-spine-stitching {
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.18) 0px,
+        rgba(0, 0, 0, 0.18) 6px,
+        transparent 6px,
+        transparent 12px
+    );
+}
+
+/* Multi-sheet Paper Edge Stack (Right edge paper stack illusion) */
+.book-paper-edge-stack {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    pointer-events: none;
+    z-index: 98;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(0, 0, 0, 0.2) 50%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    box-shadow: -1px 0 3px rgba(0, 0, 0, 0.35);
+}
+
+/* Dynamic Paper Lighting & Shadow Overlay (animates during page turn) */
+.book-page-lighting {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: linear-gradient(
+        95deg,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(255, 255, 255, 0.08) 35%,
+        transparent 65%,
+        rgba(0, 0, 0, 0.45) 100%
+    );
+}
+
+.book-page-sheet[data-turning="true"] .book-page-lighting {
+    opacity: 1;
+}
+
+/* Dynamic Page Sheen (specular shine across curled paper) */
+.book-page-sheen {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -20%;
+    width: 40%;
+    pointer-events: none;
+    z-index: 21;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.18) 50%,
+        transparent 100%
+    );
+    opacity: 0;
+    transform: skewX(-15deg);
+}
+
+/* Floating Editorial Page Indicator (Bottom-right badge) */
+.book-page-indicator {
+    position: fixed;
+    bottom: 24px;
+    right: 28px;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(18, 22, 34, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    pointer-events: none;
+    user-select: none;
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+[data-theme="light"] .book-page-indicator {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    color: rgba(15, 23, 42, 0.8);
+}
+
+.book-indicator-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+    opacity: 0.9;
+}
+
+.book-indicator-num {
+    color: var(--color-primary, #60a5fa);
+    font-weight: 700;
+}
+
+.book-indicator-divider {
+    opacity: 0.3;
+}
+
+.book-indicator-title {
+    letter-spacing: 0.05em;
+    opacity: 0.75;
+}
+
+/* Folded Dog-Ear Corner in Bottom-Right */
+.book-corner-dogear {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 38px;
+    height: 38px;
+    z-index: 89;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.book-dogear-fold {
+    position: absolute;
+    bottom: -19px;
+    right: -19px;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.03) 50%, transparent 51%);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: -3px -3px 8px rgba(0, 0, 0, 0.25);
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+[data-theme="light"] .book-dogear-fold {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.02) 50%, transparent 51%);
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: -3px -3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .book-transition-stage {
+        perspective: none;
+    }
+    .book-page-sheet {
+        transform: none !important;
     }
 }

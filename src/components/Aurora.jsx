@@ -136,7 +136,8 @@ export default function Aurora({
       renderer = new Renderer({
         alpha: true,
         premultipliedAlpha: true,
-        antialias: true
+        antialias: false,
+        dpr: Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 1.25)
       });
     } catch {
       return;
@@ -154,9 +155,11 @@ export default function Aurora({
       if (!ctn) return;
       const width = ctn.offsetWidth || window.innerWidth;
       const height = ctn.offsetHeight || window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+      renderer.dpr = dpr;
       renderer.setSize(width, height);
       if (program) {
-        program.uniforms.uResolution.value = [width, height];
+        program.uniforms.uResolution.value = [width * dpr, height * dpr];
       }
     }
 
@@ -165,6 +168,23 @@ export default function Aurora({
     });
     resizeObserver.observe(ctn);
     window.addEventListener('resize', resize);
+
+    // Track viewport visibility to completely pause GPU loop when scrolled off-screen
+    let isVisible = true;
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    }, { rootMargin: '120px' });
+    visibilityObserver.observe(ctn);
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        isVisible = false;
+      } else if (ctn) {
+        const rect = ctn.getBoundingClientRect();
+        isVisible = rect.bottom > -100 && rect.top < window.innerHeight + 100;
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     const geometry = new Triangle(gl);
     if (geometry.attributes.uv) {
@@ -178,6 +198,7 @@ export default function Aurora({
 
     const initialWidth = ctn.offsetWidth || window.innerWidth;
     const initialHeight = ctn.offsetHeight || window.innerHeight;
+    const initialDpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 1.25);
 
     program = new Program(gl, {
       vertex: VERT,
@@ -186,7 +207,7 @@ export default function Aurora({
         uTime: { value: 0 },
         uAmplitude: { value: propsRef.current.amplitude },
         uColorStops: { value: initialStops },
-        uResolution: { value: [initialWidth, initialHeight] },
+        uResolution: { value: [initialWidth * initialDpr, initialHeight * initialDpr] },
         uBlend: { value: propsRef.current.blend },
         uLightMode: { value: propsRef.current.lightMode ? 1 : 0 }
       }
@@ -201,7 +222,12 @@ export default function Aurora({
 
     const update = (now) => {
       animateId = requestAnimationFrame(update);
-      const delta = Math.min((now - lastTime) / 1000, 0.1);
+      if (!isVisible || document.hidden) {
+        lastTime = now;
+        return;
+      }
+
+      const delta = Math.min((now - lastTime) / 1000, 0.05);
       lastTime = now;
 
       const currentProps = propsRef.current;
@@ -227,7 +253,9 @@ export default function Aurora({
     return () => {
       cancelAnimationFrame(animateId);
       resizeObserver.disconnect();
+      visibilityObserver.disconnect();
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       if (ctn && gl.canvas.parentNode === ctn) {
         ctn.removeChild(gl.canvas);
       }

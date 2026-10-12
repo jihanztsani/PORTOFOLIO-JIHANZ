@@ -177,7 +177,10 @@
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(8px);
-    animation: lbFadeIn 0.2s ease;
+    -webkit-backdrop-filter: blur(8px);
+    isolation: isolate;
+    contain: strict;
+    animation: lbFadeIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @keyframes lbFadeIn {

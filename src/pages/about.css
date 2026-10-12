@@ -16,6 +16,9 @@
     padding: 35px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    isolation: isolate;
+    contain: paint;
 }
 
 [data-theme="light"] .about-bio-card,
@@ -197,7 +200,10 @@
     border-radius: 12px;
     padding: 18px 20px;
     backdrop-filter: blur(10px);
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    -webkit-backdrop-filter: blur(10px);
+    isolation: isolate;
+    contain: paint;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 [data-theme="light"] .col-item-card {

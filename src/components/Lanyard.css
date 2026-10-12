@@ -10,4 +10,6 @@
   transform: scale(1);
   transform-origin: center;
   user-select: none;
+  contain: layout paint;
+  isolation: isolate;
 }

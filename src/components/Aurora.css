@@ -6,6 +6,8 @@
   overflow: hidden;
   pointer-events: none;
   z-index: 1;
+  contain: strict;
+  isolation: isolate;
 }
 
 .aurora-container canvas {

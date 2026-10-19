@@ -18,6 +18,7 @@ import Activities from "./pages/activities";
 import Projects from "./pages/projects";
 import Certificates from "./pages/certificates";
 import HomePreviews from "./components/HomePreviews";
+import StickyNotes from "./components/StickyNotes";
 
 // Page metadata & sequence order in the portfolio book
 const BOOK_PAGES = {
@@ -217,13 +218,14 @@ function BookPageTransition({ children }) {
     );
 }
 
-// Homepage: Only renders Hero, About, Sections Highlights/Previews, and Contact Us (via MainLayout Footer)
+// Homepage: Only renders Hero, About, Sections Highlights/Previews, Sticky Notes (Guestbook), and Contact Us (via MainLayout Footer)
 function HomePage() {
     return (
         <div className="home-page-wrapper">
             <Home />
             <About />
             <HomePreviews />
+            <StickyNotes />
         </div>
     );
 }

@@ -76,7 +76,7 @@ function About() {
 
             {/* DUAL COLUMN: PENDIDIKAN & KEPANITIAAN / ORGANISASI (SIDE-BY-SIDE) */}
             <div className="about-dual-timeline-section">
-                
+
                 {/* COLUMN 1: PENDIDIKAN */}
                 <div className="dual-timeline-col">
                     <div className="col-timeline-header">
@@ -196,7 +196,10 @@ function About() {
                                 <h3 className="col-card-title">Kepanitiaan Kampus 2024</h3>
                                 <ul className="col-compact-list">
                                     <li>
-                                        <strong>Liaison Officer</strong> — Penerimaan Maba Beasiswa Sawit (BPDPKS)
+                                        <strong>Liaison Officer </strong> — (PMB PCR) Penerimaan Maba Beasiswa Sawit (BPDPKS)
+                                    </li>
+                                    <li>
+                                        <strong>Divisi Publikasi</strong> — PMB PCR ESPORT 2024
                                     </li>
                                     <li>
                                         <strong>Divisi Acara</strong> — Sidang Terbuka Senat
@@ -204,6 +207,7 @@ function About() {
                                     <li>
                                         <strong>Koordinator Lapangan</strong> — ITSA Organization Training
                                     </li>
+
                                 </ul>
                             </div>
                         </div>

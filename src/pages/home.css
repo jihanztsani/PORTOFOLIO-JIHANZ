@@ -209,3 +209,77 @@
         order: -1;
     }
 }
+
+/* ==========================================================================
+   REACT BITS - CURVED LOOP COMPONENT (TEPAT DI BAWAH HERO)
+   ========================================================================== */
+
+.curved-loop-jacket {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 14px 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+    touch-action: pan-y;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    background: rgba(10, 11, 14, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+[data-theme="light"] .curved-loop-jacket {
+    background: rgba(248, 250, 252, 0.6);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.curved-loop-svg {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    width: 100%;
+    height: clamp(54px, 5.5vw, 78px);
+    aspect-ratio: 1440 / 90;
+    overflow: visible;
+    display: block;
+    font-size: 46px;
+    fill: var(--text-primary);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1;
+    dominant-baseline: central;
+    alignment-baseline: central;
+    transition: fill 0.3s ease;
+}
+
+.curved-loop-svg text {
+    dominant-baseline: central;
+    alignment-baseline: central;
+}
+
+.custom-text-style {
+    font-family: "Syne", "Poppins", sans-serif;
+    font-weight: 800;
+    letter-spacing: 3px;
+    fill: var(--text-primary);
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.35));
+}
+
+[data-theme="light"] .custom-text-style {
+    fill: #0f172a;
+    filter: drop-shadow(0 2px 6px rgba(15, 23, 42, 0.08));
+}
+
+@media (max-width: 600px) {
+    .curved-loop-jacket {
+        padding: 10px 0;
+    }
+    .curved-loop-svg {
+        height: 48px;
+        font-size: 38px;
+    }
+}

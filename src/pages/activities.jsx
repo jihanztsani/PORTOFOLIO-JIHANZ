@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import DriftWall from "../components/DriftWall";
+import InfiniteImageField from "../components/InfiniteImageField";
 import "./activities.css";
 
 // ── Import all documentation images ──────────────────────────────────────────
@@ -74,23 +74,6 @@ const allDocs = [
     doc51, doc52, doc53, doc54, doc55, doc56, doc57, doc58, doc59, doc60,
 ];
 
-// ── Shuffle helper ───────────────────────────────────────────────────────────
-function shuffleArray(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-}
-
-// ── Shuffled docs (stable per mount) ─────────────────────────────────────────
-const shuffledDocs = shuffleArray(
-    allDocs.map((src, i) => ({ src, originalIdx: i }))
-);
-
-const INITIAL_SHOW = 20;
-
 // ── Activities mini-pills data ────────────────────────────────────────────────
 const activitiesList = [
     { period: "2024 — PRESENT", role: "AI & NLP RESEARCHER" },
@@ -98,7 +81,6 @@ const activitiesList = [
     { period: "2023 — 2024", role: "MACHINE LEARNING" },
     { period: "2022 — PRESENT", role: "3D & UI/UX DESIGN" },
 ];
-
 
 // ── Lightbox ──────────────────────────────────────────────────────────────────
 function Lightbox({ src, onClose, onPrev, onNext }) {
@@ -126,23 +108,6 @@ function Lightbox({ src, onClose, onPrev, onNext }) {
 function Activities() {
     const [lightboxIdx, setLightboxIdx] = useState(null);
     const [lightboxSrc, setLightboxSrc] = useState(null);
-    const [showAll, setShowAll] = useState(false);
-    const [visibleIdxs, setVisibleIdxs] = useState(new Set());
-    const gridRef = useRef(null);
-
-    // Stagger reveal on mount
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            const count = showAll ? shuffledDocs.length : INITIAL_SHOW;
-            const idxs = new Set();
-            for (let i = 0; i < count; i++) {
-                setTimeout(() => {
-                    setVisibleIdxs(prev => new Set([...prev, i]));
-                }, i * 40);
-            }
-        }, 100);
-        return () => clearTimeout(timer);
-    }, [showAll]);
 
     const openLightbox = (src, idx) => {
         setLightboxSrc(src);
@@ -150,29 +115,16 @@ function Activities() {
     };
     const closeLightbox = () => { setLightboxIdx(null); setLightboxSrc(null); };
     const prevImg = () => {
-        const next = (lightboxIdx - 1 + shuffledDocs.length) % shuffledDocs.length;
+        const next = (lightboxIdx - 1 + allDocs.length) % allDocs.length;
         setLightboxIdx(next);
-        setLightboxSrc(shuffledDocs[next].src);
+        setLightboxSrc(allDocs[next]);
     };
     const nextImg = () => {
-        const next = (lightboxIdx + 1) % shuffledDocs.length;
+        const next = (lightboxIdx + 1) % allDocs.length;
         setLightboxIdx(next);
-        setLightboxSrc(shuffledDocs[next].src);
+        setLightboxSrc(allDocs[next]);
     };
 
-    const handleSeeMore = () => {
-        setVisibleIdxs(new Set()); // reset so new ones animate in
-        setShowAll(true);
-    };
-
-    const displayedDocs = showAll ? shuffledDocs : shuffledDocs.slice(0, INITIAL_SHOW);
-
-    const driftWallItems = allDocs.map((src, i) => ({
-        image: src,
-        title: `Doc ${i}`,
-        href: undefined,
-        onClick: () => openLightbox(src, i)
-    }));
 
     return (
         <>
@@ -224,30 +176,16 @@ function Activities() {
                 </div>
 
                 <div className="doc-driftwall-container">
-                  <DriftWall
-                    items={driftWallItems}
-                    columns={6}
-                    tileWidth={210}
-                    tileHeight={140}
-                    gap={20}
-                    tilt={0}
-                    turn={0}
-                    roll={0}
-                    offsetX={0}
-                    perspective={1000}
-                    depth={0}
-                    speed={36}
-                    direction="up"
-                    variance={0.3}
-                    parallax={0}
-                    lift={30}
-                    fade={0.75}
-                    dim={0.7}
-                    overlayColor="#08090c"
-                    radius={14}
-                    pauseOnHover={false}
-                    grayscale={false}
-                  />
+                    <InfiniteImageField
+                        images={allDocs}
+                        imageWidth={220}
+                        imageHeight={280}
+                        gap={24}
+                        maxSpeed={4.5}
+                        smoothing={0.08}
+                        borderRadius={14}
+                        onImageClick={(src, idx) => openLightbox(src, idx)}
+                    />
                 </div>
             </section>
 

@@ -77,132 +77,141 @@
     margin: 0 0 32px 0;
 }
 
+.sticky-header-split {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.sticky-header-left {
+    max-width: 680px;
+}
+
+.sticky-header-left .sticky-notes-subtitle {
+    margin-bottom: 0;
+}
+
 /* --------------------------------------------------------------------------
-   ACTION BAR & FILTER BUTTONS
+   PINBOARD STAGE & FLANKING LAYOUT
    -------------------------------------------------------------------------- */
 
-.sticky-action-bar {
+/* --------------------------------------------------------------------------
+   FLANKING LAYOUT: LEFT NOTES | CENTER FORM | RIGHT NOTES
+   -------------------------------------------------------------------------- */
+
+.sticky-flanking-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(360px, 440px) minmax(280px, 1fr);
+    gap: 36px;
+    align-items: start;
+    position: relative;
+    max-width: 1400px;
+    margin: 36px auto 0 auto;
+    z-index: 2;
+}
+
+/* Left & Right Notes Columns */
+.sticky-notes-column {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border-subtle);
+    flex-direction: column;
+    gap: 28px;
+    max-height: 760px;
+    overflow-y: auto;
+    padding: 8px 14px 24px 14px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(96, 165, 250, 0.25) transparent;
 }
 
-.sticky-filters {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+.sticky-notes-column::-webkit-scrollbar {
+    width: 5px;
 }
 
-.sticky-filter-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
-    font-family: "Poppins", sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 7px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+.sticky-notes-column::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-.sticky-filter-btn:hover {
-    color: var(--text-primary);
-    border-color: var(--border-strong);
-    background: rgba(255, 255, 255, 0.06);
-}
-
-.sticky-filter-btn.active {
-    background: var(--blue-600);
-    border-color: var(--blue-500);
-    color: #ffffff;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-}
-
-.filter-count {
-    background: rgba(255, 255, 255, 0.2);
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 6px;
+.sticky-notes-column::-webkit-scrollbar-thumb {
+    background: rgba(96, 165, 250, 0.25);
     border-radius: 999px;
-    min-width: 18px;
-    text-align: center;
 }
 
-.sticky-filter-btn.active .filter-count {
-    background: rgba(255, 255, 255, 0.3);
-    color: #ffffff;
+/* Center Form Container (Clean & Card-less) */
+.sticky-center-form-container {
+    position: sticky;
+    top: 90px;
+    background: transparent;
+    padding: 6px 12px 20px 12px;
+    z-index: 5;
 }
 
-.add-note-cta-btn {
-    display: inline-flex;
+.center-form-header {
+    margin-bottom: 18px;
+}
+
+.center-form-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 4px 0 6px 0;
+    line-height: 1.2;
+}
+
+.center-form-desc {
+    font-family: "Poppins", sans-serif;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.inline-note-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-success-banner {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #34d399;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.add-note-submit-btn {
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: #ffffff;
     border: none;
     font-family: "Poppins", sans-serif;
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 999px;
+    padding: 12px 20px;
+    border-radius: 12px;
     cursor: pointer;
-    box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.38);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    margin-top: 4px;
+    width: 100%;
 }
 
-.add-note-cta-btn:hover {
+.add-note-submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 10px 26px rgba(37, 99, 235, 0.5);
 }
 
-/* --------------------------------------------------------------------------
-   PINBOARD STAGE
-   -------------------------------------------------------------------------- */
-
-.sticky-board-stage {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    min-height: 400px;
-    padding: 36px 28px;
-    border-radius: 20px;
-    background: radial-gradient(circle at center, rgba(30, 41, 59, 0.25) 0%, rgba(15, 23, 42, 0.5) 100%);
-    border: 1px dashed var(--border-medium);
-    box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-}
-
-[data-theme="light"] .sticky-board-stage {
-    background: radial-gradient(circle at center, rgba(241, 245, 249, 0.8) 0%, rgba(226, 232, 240, 0.6) 100%);
-    border-color: rgba(148, 163, 184, 0.35);
-    box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.04);
-}
-
-.board-grid-pattern {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.08;
-    background-size: 30px 30px;
-    background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
-}
-
-[data-theme="light"] .board-grid-pattern {
-    opacity: 0.12;
-    background-image:
-        linear-gradient(to right, rgba(0, 0, 0, 0.5) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 1px, transparent 1px);
+.add-note-submit-btn:active {
+    transform: translateY(0);
 }
 
 /* Empty prompt */
@@ -221,60 +230,85 @@
     margin-bottom: 12px;
 }
 
-.empty-cta-btn {
-    margin-top: 14px;
-    background: transparent;
-    border: 1px dashed var(--blue-500);
-    color: var(--blue-400);
-    font-family: "Poppins", sans-serif;
-    font-size: 13px;
-    padding: 8px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.empty-cta-btn:hover {
-    background: rgba(37, 99, 235, 0.1);
-}
-
-/* --------------------------------------------------------------------------
-   STICKY NOTES GRID & CARDS
-   -------------------------------------------------------------------------- */
-
-.sticky-notes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 28px 24px;
-    position: relative;
-    z-index: 2;
-}
-
 .sticky-note-card {
     position: relative;
     background-color: var(--note-bg);
-    color: #1e293b;
-    padding: 22px 20px 18px 20px;
+    color: var(--note-text, #f8fafc);
+    border: 1px solid var(--note-border, rgba(255, 255, 255, 0.12));
+    padding: 24px 22px 18px 22px;
     border-radius: 4px;
-    transform: rotate(var(--note-rot, 0deg));
     box-shadow:
-        0 6px 16px rgba(0, 0, 0, 0.22),
-        0 2px 4px rgba(0, 0, 0, 0.12),
-        inset 0 -2px 6px rgba(0, 0, 0, 0.04);
+        0 14px 28px rgba(0, 0, 0, 0.35),
+        0 4px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 220px;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    min-height: 185px;
+    margin-left: var(--offset-x, 0px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
     user-select: text;
+    will-change: transform;
+}
+
+/* Organic Floating Animations */
+.sticky-note-card.float-variant-1 {
+    animation: floatGentle1 5.2s ease-in-out infinite alternate;
+    animation-delay: var(--float-delay, 0s);
+}
+
+.sticky-note-card.float-variant-2 {
+    animation: floatGentle2 6.5s ease-in-out infinite alternate;
+    animation-delay: var(--float-delay, 0s);
+}
+
+.sticky-note-card.float-variant-3 {
+    animation: floatGentle3 5.8s ease-in-out infinite alternate;
+    animation-delay: var(--float-delay, 0s);
+}
+
+@keyframes floatGentle1 {
+    0% {
+        transform: translateY(0px) translateX(0px) rotate(var(--note-rot, 0deg));
+    }
+    50% {
+        transform: translateY(-12px) translateX(4px) rotate(calc(var(--note-rot, 0deg) + 1.2deg));
+    }
+    100% {
+        transform: translateY(6px) translateX(-3px) rotate(calc(var(--note-rot, 0deg) - 0.8deg));
+    }
+}
+
+@keyframes floatGentle2 {
+    0% {
+        transform: translateY(0px) translateX(0px) rotate(var(--note-rot, 0deg));
+    }
+    50% {
+        transform: translateY(11px) translateX(-5px) rotate(calc(var(--note-rot, 0deg) - 1.4deg));
+    }
+    100% {
+        transform: translateY(-9px) translateX(3px) rotate(calc(var(--note-rot, 0deg) + 1deg));
+    }
+}
+
+@keyframes floatGentle3 {
+    0% {
+        transform: translateY(-5px) translateX(0px) rotate(var(--note-rot, 0deg));
+    }
+    50% {
+        transform: translateY(9px) translateX(4px) rotate(calc(var(--note-rot, 0deg) + 1.5deg));
+    }
+    100% {
+        transform: translateY(-6px) translateX(-2px) rotate(calc(var(--note-rot, 0deg) - 1deg));
+    }
 }
 
 .sticky-note-card:hover {
-    transform: rotate(0deg) scale(1.03) translateY(-6px);
+    animation-play-state: paused !important;
+    transform: translateY(-12px) scale(1.05) rotate(0deg) !important;
     box-shadow:
-        0 14px 28px rgba(0, 0, 0, 0.3),
-        0 6px 10px rgba(0, 0, 0, 0.15);
-    z-index: 10;
+        0 24px 48px rgba(0, 0, 0, 0.48),
+        0 8px 18px rgba(0, 0, 0, 0.28);
+    z-index: 25;
 }
 
 /* Realistic Pushpin */
@@ -292,9 +326,10 @@
 .pin-head {
     width: 14px;
     height: 14px;
-    background: radial-gradient(circle at 35% 35%, #ffffff 0%, var(--note-pin) 70%, #0f172a 100%);
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, var(--note-pin, #6497b1) 70%, #011f4b 100%);
     border-radius: 50%;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
 .pin-shadow {
@@ -310,17 +345,7 @@
 
 /* Washi tape accent */
 .sticky-washi-tape {
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 14px;
-    background: rgba(255, 255, 255, 0.45);
-    border-left: 2px dashed rgba(0, 0, 0, 0.15);
-    border-right: 2px dashed rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(2px);
-    display: none; /* Pushpin used by default */
+    display: none;
 }
 
 /* Folded Corner */
@@ -332,36 +357,8 @@
     height: 0;
     border-style: solid;
     border-width: 0 0 16px 16px;
-    border-color: transparent transparent rgba(0, 0, 0, 0.15) transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.18) transparent;
     pointer-events: none;
-}
-
-/* Note Header */
-.note-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 12px;
-    padding-top: 4px;
-}
-
-.note-cat-tag {
-    font-family: "Space Mono", monospace;
-    font-size: 10.5px;
-    font-weight: 700;
-    text-transform: uppercase;
-    background: rgba(0, 0, 0, 0.08);
-    color: #1e293b;
-    padding: 3px 8px;
-    border-radius: 4px;
-}
-
-.note-date {
-    font-family: "Space Mono", monospace;
-    font-size: 10.5px;
-    color: #64748b;
-    font-weight: 600;
 }
 
 /* Note Body */
@@ -372,41 +369,36 @@
 
 .note-text-content {
     font-family: "Poppins", sans-serif;
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: #0f172a;
+    font-size: 14px;
+    line-height: 1.62;
+    color: var(--note-text, #f8fafc);
     font-weight: 500;
     word-break: break-word;
+    margin: 0;
 }
 
 /* Note Footer */
 .note-card-footer {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 12px;
-    border-top: 1px dashed rgba(0, 0, 0, 0.12);
-    padding-top: 10px;
+    border-top: 1px dashed var(--note-border, rgba(255, 255, 255, 0.15));
+    padding-top: 12px;
 }
 
 .note-author-info {
     display: flex;
-    flex-direction: column;
+    align-items: center;
 }
 
 .note-author-name {
     font-family: "Poppins", sans-serif;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--note-text, #f8fafc);
     line-height: 1.2;
-}
-
-.note-author-role {
-    font-family: "Space Mono", monospace;
-    font-size: 10px;
-    color: #475569;
-    margin-top: 2px;
+    letter-spacing: 0.2px;
 }
 
 .note-actions-row {
@@ -700,34 +692,35 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-wrap: wrap;
+    padding-top: 4px;
 }
 
 .color-swatch-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    border: 2px solid transparent;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .color-swatch-btn:hover {
-    transform: scale(1.12);
+    transform: scale(1.15);
 }
 
 .color-swatch-btn.active {
-    border-color: var(--blue-500);
+    border-color: #60a5fa;
     transform: scale(1.15);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.4), 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .swatch-check {
-    color: #0f172a;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 800;
 }
 
@@ -735,10 +728,10 @@
 .modal-preview-box {
     background: rgba(0, 0, 0, 0.25);
     border-radius: 12px;
-    padding: 12px 14px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 [data-theme="light"] .modal-preview-box {
@@ -747,34 +740,33 @@
 
 .preview-label {
     font-family: "Space Mono", monospace;
-    font-size: 10px;
+    font-size: 10.5px;
     text-transform: uppercase;
     color: var(--text-muted);
 }
 
 .mini-preview-note {
-    border-radius: 4px;
-    padding: 12px 14px;
-    color: #0f172a;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    transition: background-color 0.2s ease;
+    gap: 10px;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .mini-note-text {
     font-family: "Poppins", sans-serif;
-    font-size: 12.5px;
-    line-height: 1.5;
+    font-size: 13.5px;
+    line-height: 1.55;
     font-weight: 500;
+    word-break: break-word;
 }
 
 .mini-note-author {
     font-family: "Poppins", sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
-    color: #475569;
 }
 
 /* Modal Actions */
@@ -827,41 +819,39 @@
    RESPONSIVE DESIGN
    -------------------------------------------------------------------------- */
 
+@media (max-width: 1100px) {
+    .sticky-flanking-layout {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .sticky-center-form-container {
+        grid-column: 1 / -1;
+        position: static;
+        max-width: 580px;
+        margin: 0 auto 10px auto;
+        width: 100%;
+    }
+}
+
 @media (max-width: 768px) {
     .sticky-notes-section {
         padding: 50px 5vw 70px 5vw;
     }
 
     .sticky-board-stage {
-        padding: 24px 16px;
+        padding: 20px 14px;
     }
 
-    .sticky-notes-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 20px 16px;
-    }
-
-    .form-row-dual {
+    .sticky-flanking-layout {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    .category-radio-group {
-        grid-template-columns: repeat(2, 1fr);
+    .sticky-notes-column {
+        max-height: none;
+        overflow-y: visible;
+        padding: 6px 4px;
     }
 }
 
-@media (max-width: 480px) {
-    .sticky-notes-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .sticky-action-bar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .add-note-cta-btn {
-        width: 100%;
-        justify-content: center;
-    }
-}

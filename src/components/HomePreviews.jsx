@@ -108,32 +108,48 @@ function HomePreviews() {
                                 <div className="teaser-project-item">
                                     <div className="teaser-proj-header">
                                         <span className="teaser-proj-num">01</span>
-                                        <span className="teaser-proj-cat">AI / NLP / WEB</span>
+                                        <span className="teaser-proj-cat">UI/UX • IMK (HCI)</span>
                                     </div>
-                                    <h3 className="teaser-proj-title">RHIVA</h3>
+                                    <h3 className="teaser-proj-title">REMINDIFY</h3>
                                     <p className="teaser-proj-desc">
-                                        Sistem analisis sentimen ulasan perhotelan berbasis fine-tuned IndoBERT untuk klasifikasi opini akurat.
+                                        Aplikasi pengingat cerdas & manajemen jadwal berbasis prinsip Human-Computer Interaction (HCI) dengan prototipe interaktif Figma.
                                     </p>
                                     <div className="teaser-proj-tags">
-                                        <span>IndoBERT</span>
-                                        <span>Python</span>
-                                        <span>React</span>
+                                        <span>Figma</span>
+                                        <span>UI/UX Design</span>
+                                        <span>HCI / IMK</span>
                                     </div>
                                 </div>
 
                                 <div className="teaser-project-item">
                                     <div className="teaser-proj-header">
                                         <span className="teaser-proj-num">02</span>
-                                        <span className="teaser-proj-cat">COMPUTER VISION / ML</span>
+                                        <span className="teaser-proj-cat">WORKSHOP RPL 2 • SE</span>
                                     </div>
-                                    <h3 className="teaser-proj-title">FASHION CNN</h3>
+                                    <h3 className="teaser-proj-title">SENIQ</h3>
                                     <p className="teaser-proj-desc">
-                                        Klasifikasi citra produk fashion multikelas menggunakan arsitektur Convolutional Neural Network (CNN).
+                                        Solusi perangkat lunak terintegrasi untuk mata kuliah Workshop RPL 2 dengan perancangan arsitektur sistem dan prototipe Figma interaktif.
                                     </p>
                                     <div className="teaser-proj-tags">
-                                        <span>PyTorch</span>
-                                        <span>CNN</span>
-                                        <span>Vision</span>
+                                        <span>Figma</span>
+                                        <span>Workshop RPL 2</span>
+                                        <span>Software Eng</span>
+                                    </div>
+                                </div>
+
+                                <div className="teaser-project-item">
+                                    <div className="teaser-proj-header">
+                                        <span className="teaser-proj-num">03</span>
+                                        <span className="teaser-proj-cat">3D ANIMATION • WEBGL</span>
+                                    </div>
+                                    <h3 className="teaser-proj-title">PROJEK ANIMASI 3D</h3>
+                                    <p className="teaser-proj-desc">
+                                        Pemodelan dan simulasi lingkungan 3D interaktif real-time dengan animasi 'BodyAction.017' langsung di web.
+                                    </p>
+                                    <div className="teaser-proj-tags">
+                                        <span>Blender 3D</span>
+                                        <span>Three.js</span>
+                                        <span>GLB Animation</span>
                                     </div>
                                 </div>
                             </div>

@@ -77,12 +77,211 @@
 .project-arrow {
     font-size: 30px;
     color: var(--text-primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .project-row:hover .project-arrow {
     color: var(--blue-500);
     transform: translate(5px, -5px);
+}
+
+/* =====================================================
+   PROJECT ACTION BUTTONS & FIGMA EMBED
+   ===================================================== */
+
+.project-actions-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.project-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-family: "Space Mono", monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+}
+
+.project-action-btn.primary {
+    background: #2563eb;
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+}
+
+.project-action-btn.primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.5);
+    color: #ffffff;
+}
+
+.project-action-btn.secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border-color: var(--border-subtle);
+}
+
+[data-theme="light"] .project-action-btn.secondary {
+    background: rgba(15, 23, 42, 0.04);
+    border-color: rgba(15, 23, 42, 0.12);
+}
+
+.project-action-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--blue-300);
+    border-color: var(--blue-500);
+    transform: translateY(-2px);
+}
+
+[data-theme="light"] .project-action-btn.secondary:hover {
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--blue-600);
+    border-color: var(--blue-500);
+}
+
+.project-action-btn.toggle-preview {
+    background: rgba(147, 197, 253, 0.08);
+    color: var(--blue-300);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="light"] .project-action-btn.toggle-preview {
+    background: rgba(37, 99, 235, 0.06);
+    color: var(--blue-600);
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+.project-action-btn.toggle-preview:hover,
+.project-action-btn.toggle-preview.active {
+    background: rgba(59, 130, 246, 0.18);
+    border-color: var(--blue-400);
+    color: #ffffff;
+}
+
+[data-theme="light"] .project-action-btn.toggle-preview:hover,
+[data-theme="light"] .project-action-btn.toggle-preview.active {
+    background: rgba(37, 99, 235, 0.12);
+    color: var(--blue-700);
+}
+
+.toggle-chevron {
+    font-size: 9px;
+    margin-left: 2px;
+}
+
+.project-action-btn .btn-arrow {
+    transition: transform 0.2s ease;
+}
+
+.project-action-btn:hover .btn-arrow {
+    transform: translate(2px, -2px);
+}
+
+/* Figma Live Embed Wrap */
+.project-figma-embed-wrap {
+    margin-top: 24px;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0f131a;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    animation: fadeInEmbed 0.35s ease;
+}
+
+[data-theme="light"] .project-figma-embed-wrap {
+    background: #f8fafc;
+    border-color: rgba(15, 23, 42, 0.12);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+@keyframes fadeInEmbed {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.embed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    background: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+[data-theme="light"] .embed-header {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.embed-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 10px #10b981;
+}
+
+.embed-fullscreen-link {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    color: var(--blue-400);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s ease;
+}
+
+.embed-fullscreen-link:hover {
+    color: var(--blue-300);
+    text-decoration: underline;
+}
+
+.figma-iframe {
+    display: block;
+    width: 100%;
+    height: 600px;
+    border: none;
+    background: #1e1e1e;
+}
+
+@media (max-width: 768px) {
+    .figma-iframe {
+        height: 440px;
+    }
 }
 
 /* =====================================================

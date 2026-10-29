@@ -9,7 +9,7 @@ export const CurvedLoop = ({
   marqueeText = '',
   speed = 2,
   className,
-  curveAmount = 400,
+  curveAmount = 10,
   direction = 'left',
   interactive = true
 }) => {
@@ -18,14 +18,49 @@ export const CurvedLoop = ({
     return (hasTrailing ? marqueeText.replace(/\s+$/, '') : marqueeText) + '\u00A0';
   }, [marqueeText]);
 
+  const jacketRef = useRef(null);
   const measureRef = useRef(null);
   const textPathRef = useRef(null);
   const pathRef = useRef(null);
   const [spacing, setSpacing] = useState(0);
-  const [offset, setOffset] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1440
+  );
+  const offsetRef = useRef(0);
   const uid = useId();
   const pathId = `curve-${uid.replace(/[^a-zA-Z0-9-_]/g, '')}`;
-  const pathD = `M-100,${45 - curveAmount / 2} Q720,${45 + curveAmount / 2} 1540,${45 - curveAmount / 2}`;
+
+  // Keep SVG width 100% responsive across all screen sizes
+  useEffect(() => {
+    if (!jacketRef.current) return;
+    const updateSize = () => {
+      if (jacketRef.current) {
+        setContainerWidth(jacketRef.current.clientWidth || window.innerWidth || 1440);
+      }
+    };
+    updateSize();
+
+    let ro = null;
+    if (typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(updateSize);
+      ro.observe(jacketRef.current);
+    }
+    window.addEventListener('resize', updateSize);
+    return () => {
+      if (ro) ro.disconnect();
+      window.removeEventListener('resize', updateSize);
+    };
+  }, []);
+
+  // Wide buffer margins so text extends seamlessly beyond screen edges on left & right
+  const margin = Math.max((spacing || 400) * 2, 800);
+  const xStart = -margin;
+  const xEnd = containerWidth + margin;
+  const xMid = containerWidth / 2;
+  const yStart = 45 - curveAmount / 2;
+  const yMid = 45 + curveAmount / 2;
+  const yEnd = 45 - curveAmount / 2;
+  const pathD = `M${xStart},${yStart} Q${xMid},${yMid} ${xEnd},${yEnd}`;
 
   const dragRef = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -34,10 +69,11 @@ export const CurvedLoop = ({
   const velRef = useRef(0);
 
   const textLength = spacing;
+  const repeatCount = textLength
+    ? Math.max(Math.ceil((containerWidth + margin * 4) / textLength) + 4, 8)
+    : 10;
   const totalText = textLength
-    ? Array(Math.max(Math.ceil(2400 / textLength) + 4, 6))
-        .fill(text)
-        .join('')
+    ? Array(repeatCount).fill(text).join('')
     : text;
   const ready = spacing > 0;
 
@@ -56,10 +92,10 @@ export const CurvedLoop = ({
 
   useEffect(() => {
     if (!spacing) return;
+    const initial = -spacing;
+    offsetRef.current = initial;
     if (textPathRef.current) {
-      const initial = -spacing;
       textPathRef.current.setAttribute('startOffset', initial + 'px');
-      setOffset(initial);
     }
   }, [spacing]);
 
@@ -69,15 +105,14 @@ export const CurvedLoop = ({
     const step = () => {
       if (!dragRef.current && textPathRef.current) {
         const delta = dirRef.current === 'right' ? speed : -speed;
-        const currentOffset = parseFloat(textPathRef.current.getAttribute('startOffset') || '0');
-        let newOffset = currentOffset + delta;
+        let newOffset = offsetRef.current + delta;
 
         const wrapPoint = spacing;
         if (newOffset <= -wrapPoint) newOffset += wrapPoint;
-        if (newOffset > 0) newOffset -= wrapPoint;
+        if (newOffset >= 0) newOffset -= wrapPoint;
 
+        offsetRef.current = newOffset;
         textPathRef.current.setAttribute('startOffset', newOffset + 'px');
-        setOffset(newOffset);
       }
       frame = requestAnimationFrame(step);
     };
@@ -104,15 +139,13 @@ export const CurvedLoop = ({
     lastXRef.current = e.clientX;
     velRef.current = dx;
 
-    const currentOffset = parseFloat(textPathRef.current.getAttribute('startOffset') || '0');
-    let newOffset = currentOffset + dx;
-
+    let newOffset = offsetRef.current + dx;
     const wrapPoint = spacing;
-    if (newOffset <= -wrapPoint) newOffset += wrapPoint;
-    if (newOffset > 0) newOffset -= wrapPoint;
+    while (newOffset <= -wrapPoint) newOffset += wrapPoint;
+    while (newOffset >= 0) newOffset -= wrapPoint;
 
+    offsetRef.current = newOffset;
     textPathRef.current.setAttribute('startOffset', newOffset + 'px');
-    setOffset(newOffset);
   };
 
   const endDrag = () => {
@@ -126,6 +159,7 @@ export const CurvedLoop = ({
 
   return (
     <div
+      ref={jacketRef}
       className="curved-loop-jacket"
       style={{ visibility: ready ? 'visible' : 'hidden', cursor: cursorStyle }}
       onPointerDown={onPointerDown}
@@ -133,7 +167,11 @@ export const CurvedLoop = ({
       onPointerUp={endDrag}
       onPointerLeave={endDrag}
     >
-      <svg className="curved-loop-svg" viewBox="0 0 1440 90">
+      <svg
+        className="curved-loop-svg"
+        viewBox={`0 0 ${containerWidth} 90`}
+        preserveAspectRatio="none"
+      >
         <text
           ref={measureRef}
           className={className}
@@ -148,7 +186,12 @@ export const CurvedLoop = ({
         </defs>
         {ready && (
           <text fontWeight="bold" dominantBaseline="central" xmlSpace="preserve" className={className}>
-            <textPath ref={textPathRef} href={`#${pathId}`} startOffset={offset + 'px'} xmlSpace="preserve">
+            <textPath
+              ref={textPathRef}
+              href={`#${pathId}`}
+              startOffset={offsetRef.current + 'px'}
+              xmlSpace="preserve"
+            >
               {totalText}
             </textPath>
           </text>

@@ -6,7 +6,7 @@ import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphe
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 
 import cardGLB from '../assets/lanyard/card.glb';
-import lanyard from '../assets/lanyard/lanyard.png';
+import taliLanyard from '../assets/lanyard/Tali_Lanyard.png';
 
 import * as THREE from 'three';
 import './Lanyard.css';
@@ -139,7 +139,7 @@ function Band({
     dir = new THREE.Vector3();
   const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 4, linearDamping: 4 };
   const { nodes, materials } = useGLTF(cardGLB);
-  const texture = useTexture(lanyardImage || lanyard);
+  const texture = useTexture(lanyardImage || taliLanyard);
   // useTexture must be called unconditionally; use a blank pixel when an image
   // isn't supplied for a given face, then skip compositing it below.
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
@@ -205,17 +205,22 @@ function Band({
   useEffect(() => {
     if (texture) {
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      texture.anisotropy = 16;
     }
   }, [texture]);
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
+
+  // Dynamically compute the top clip loop anchor in card-local coordinates
+  // Model clip loop center is at y ≈ 1.19. Group position has y = -1.2, scale = cardScale.
+  const cardAnchorY = useMemo(() => cardScale * 1.19 - 1.2, [cardScale]);
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
-    [0, 1.5, 0]
+    [0, cardAnchorY, -0.05]
   ]);
 
   useEffect(() => {
@@ -290,8 +295,8 @@ function Band({
                 metalness={0.8}
               />
             </mesh>
-            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
-            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} renderOrder={1} />
+            <mesh geometry={nodes.clamp.geometry} material={materials.metal} renderOrder={1} />
           </group>
         </RigidBody>
       </group>

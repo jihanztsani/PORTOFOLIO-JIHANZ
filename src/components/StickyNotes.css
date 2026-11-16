@@ -214,7 +214,7 @@
     transform: translateY(0);
 }
 
-/* Empty prompt */
+/* Empty prompt & Column Placeholder */
 .empty-notes-prompt {
     display: flex;
     flex-direction: column;
@@ -228,6 +228,49 @@
 .empty-icon {
     font-size: 40px;
     margin-bottom: 12px;
+}
+
+.empty-column-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+    border: 2px dashed rgba(59, 130, 246, 0.25);
+    background: rgba(3, 57, 108, 0.08);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    min-height: 190px;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .empty-column-placeholder {
+    border-color: rgba(37, 99, 235, 0.2);
+    background: rgba(59, 130, 246, 0.04);
+}
+
+.empty-placeholder-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+.empty-placeholder-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+}
+
+.empty-placeholder-desc {
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    margin: 0;
+    max-width: 260px;
 }
 
 .sticky-note-card {

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Lanyard from "./Lanyard";
 import foto2 from "../assets/foto 2.jpeg";
+import logoJihanz from "../assets/lanyard/logo jihanz.png";
+import taliLanyard from "../assets/lanyard/Tali_Lanyard.png";
 import "./footer.css";
 
 function Footer() {
@@ -33,7 +35,9 @@ function Footer() {
                         gravity={[0, -40, 0]}
                         cardScale={2.55}
                         frontImage={foto2}
-                        backImage={foto2}
+                        backImage={logoJihanz}
+                        lanyardImage={taliLanyard}
+                        lanyardWidth={1}
                         imageFit="cover"
                     />
                 </div>

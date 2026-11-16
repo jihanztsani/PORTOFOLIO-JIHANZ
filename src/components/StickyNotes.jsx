@@ -50,58 +50,9 @@ export const COLOR_OPTIONS = [
     },
 ];
 
-const INITIAL_NOTES = [
-    {
-        id: "note-1",
-        name: "Aditya Pratama",
-        color: "blue-1",
-        text: "Desain portofolionya keren banget! Transisi halaman dan perpaduan visualnya berasa sangat hidup dan premium. Sukses terus Jihanz! 🔥",
-        rotation: -2.4,
-        isCustom: false,
-    },
-    {
-        id: "note-2",
-        name: "Rifky Alamsyah",
-        color: "blue-2",
-        text: "Website yang interaktif dan visualnya luar biasa rapi. Konsep editorialnya berkarakter dan seru buat dieksplor!",
-        rotation: 2.1,
-        isCustom: false,
-    },
-    {
-        id: "note-3",
-        name: "Nabila Sarah",
-        color: "blue-3",
-        text: "Keren pol! Konsep sticky note-nya estetik dan palet warnanya adem banget dilihat. Sukses selalu ✨",
-        rotation: -1.6,
-        isCustom: false,
-    },
-    {
-        id: "note-4",
-        name: "Kevin Sanjaya",
-        color: "blue-4",
-        text: "Performa website responsif, halus, dan kodenya terstruktur dengan rapi. Good job bro!",
-        rotation: 2.5,
-        isCustom: false,
-    },
-    {
-        id: "note-5",
-        name: "Dimas Nugraha",
-        color: "blue-5",
-        text: "Bangga liat perkembangannya! Eksplorasi riset AI & Frontend-nya mantap, ditunggu project kolaborasi selanjutnya 🚀",
-        rotation: -2.8,
-        isCustom: false,
-    },
-    {
-        id: "note-6",
-        name: "Clara Wijaya",
-        color: "blue-3",
-        text: "Detail mikro dan interaksi di setiap section-nya menyenangkan banget. Keren banget hasilnya!",
-        rotation: 1.8,
-        isCustom: false,
-    },
-];
+const INITIAL_NOTES = [];
 
-const STORAGE_KEY = "jihanz_portfolio_sticky_notes_flanking_v1";
+const STORAGE_KEY = "jihanz_portfolio_sticky_notes_v2";
 
 // ── Single Note Item Component ────────────────────────────────────────────────
 function StickyNoteCard({ note, onDelete, index = 0, side = "left" }) {
@@ -162,15 +113,18 @@ function StickyNoteCard({ note, onDelete, index = 0, side = "left" }) {
 function StickyNotes() {
     const [notes, setNotes] = useState(() => {
         try {
+            // Remove previous mock storage from v1
+            localStorage.removeItem("jihanz_portfolio_sticky_notes_flanking_v1");
+            localStorage.removeItem("jihanz_portfolio_sticky_notes");
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
                 const parsed = JSON.parse(saved);
-                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                if (Array.isArray(parsed)) return parsed;
             }
         } catch {
             // fallback
         }
-        return INITIAL_NOTES;
+        return [];
     });
 
     const [name, setName] = useState("");
@@ -265,15 +219,25 @@ function StickyNotes() {
             <div className="sticky-flanking-layout">
                 {/* ── LEFT COLUMN NOTES ── */}
                 <div className="sticky-notes-column sticky-notes-left">
-                    {leftNotes.map((note, i) => (
-                        <StickyNoteCard
-                            key={note.id}
-                            note={note}
-                            onDelete={handleDelete}
-                            index={i}
-                            side="left"
-                        />
-                    ))}
+                    {leftNotes.length > 0 ? (
+                        leftNotes.map((note, i) => (
+                            <StickyNoteCard
+                                key={note.id}
+                                note={note}
+                                onDelete={handleDelete}
+                                index={i}
+                                side="left"
+                            />
+                        ))
+                    ) : (
+                        <div className="empty-column-placeholder">
+                            <span className="empty-placeholder-icon">📌</span>
+                            <p className="empty-placeholder-title">Papan Masih Kosong</p>
+                            <p className="empty-placeholder-desc">
+                                Jadilah orang pertama yang meninggalkan pesan atau ulasan di portofolio ini!
+                            </p>
+                        </div>
+                    )}
                 </div>
 
                     {/* ── CENTER INPUT FORM ── */}
@@ -385,15 +349,25 @@ function StickyNotes() {
 
                     {/* ── RIGHT COLUMN NOTES ── */}
                     <div className="sticky-notes-column sticky-notes-right">
-                        {rightNotes.map((note, i) => (
-                            <StickyNoteCard
-                                key={note.id}
-                                note={note}
-                                onDelete={handleDelete}
-                                index={i}
-                                side="right"
-                            />
-                        ))}
+                        {rightNotes.length > 0 ? (
+                            rightNotes.map((note, i) => (
+                                <StickyNoteCard
+                                    key={note.id}
+                                    note={note}
+                                    onDelete={handleDelete}
+                                    index={i}
+                                    side="right"
+                                />
+                            ))
+                        ) : (
+                            <div className="empty-column-placeholder">
+                                <span className="empty-placeholder-icon">✍️</span>
+                                <p className="empty-placeholder-title">Mulai dari 0</p>
+                                <p className="empty-placeholder-desc">
+                                    Tuliskan namamu dan tempelkan catatan barumu lewat form di tengah.
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
